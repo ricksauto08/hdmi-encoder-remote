@@ -31,12 +31,20 @@ const PROFILE_DIR =
   process.env.PROFILE_DIR ||
   path.join(os.homedir(), '.chrome-hdmi-remote-profile');
 
-// Pull presets from env like CHAN_MSNBC, CHAN_CNN, etc.
+// Pull presets from env like CHAN_MSNOW, CHAN_CNN, etc.
 const PRESETS = {};
 for (const [key, value] of Object.entries(process.env)) {
   if (key.startsWith('CHAN_') && value) {
-    const name = key.slice(5).toLowerCase(); // CHAN_MSNBC -> 'msnbc'
+    const name = key.slice(5).toLowerCase(); // CHAN_MSNOW -> 'msnow'
     PRESETS[name] = value;
+  }
+}
+
+const TS_SOURCES = {};
+for (const [key, value] of Object.entries(process.env)) {
+  if (key.startsWith('TS_') && value) {
+    const name = key.slice(3).toLowerCase(); // TS_MSNOW -> 'msnow'
+    TS_SOURCES[name] = value;
   }
 }
 
@@ -47,6 +55,7 @@ console.log(`Fullscreen(F11): ${FULLSCREEN}`);
 console.log(`Kiosk flag: ${KIOSK}`);
 console.log(`Default URL: ${DEFAULT_URL || '(none)'}`);
 console.log('Presets:', PRESETS);
+console.log('TS sources:', TS_SOURCES);
 
 // -------------------- Chrome detection --------------------
 
@@ -241,6 +250,7 @@ app.get('/status', (req, res) => {
     currentUrl,
     lastTuneAt,
     presets: Object.keys(PRESETS),
+    tsSources: Object.keys(TS_SOURCES),
   });
 });
 
