@@ -1,0 +1,16 @@
+{
+  "name": "chrome-hdmi-remote",
+  "version": "0.1.0",
+  "description": "Remote-controlled Chrome instance for HDMI output (no capture/ffmpeg, just browser automation).",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "console-stamp": "^3.1.0",
+    "express": "^4.21.0",
+    "morgan": "^1.10.0",
+    "puppeteer-core": "^23.0.0"
+  }
+}
