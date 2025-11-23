@@ -87,8 +87,8 @@ function detectChromeExecutable() {
     );
   } else if (platform === 'win32') {
     candidates.push(
-      'C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe',
-      'C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe'
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
     );
   }
 
@@ -115,7 +115,7 @@ let currentUrl = null;
 let lastTuneAt = null;
 const upSince = new Date().toISOString();
 
-// Simple sleep helper (also used instead of page.waitForTimeout)
+// Simple sleep helper
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -207,19 +207,105 @@ async function clickVideoJsFullscreen(p) {
   }
 }
 
+// Optional generic fullscreen helper (not used right now, but kept)
 async function pressFullscreenKey(p) {
   try {
-    // Give focus to the player area by clicking roughly in the center
     await p.bringToFront();
     await p.mouse.move(VIDEO_WIDTH / 2, VIDEO_HEIGHT / 2);
     await p.mouse.click();
-
-    // Send the "f" key – many players treat this as "toggle fullscreen"
     await p.keyboard.press('f');
-
     console.log('[fullscreen] sent "f" key to page');
   } catch (err) {
     console.warn('[fullscreen] could not send "f" key:', err.message);
+  }
+}
+
+// Philo helper: click center to play, then conditionally click "Jump to live"
+// Philo helper: conditionally press center Play, then conditionally click "Jump to live"
+async function ensurePhiloLive(p) {
+  console.log('[philo] ensurePhiloLive: center play (if present) + conditional Jump to live');
+
+  try {
+    await p.bringToFront();
+
+    // Give Philo time to load UI before we try to read/play anything
+    await sleep(3000);
+
+    const centerX = VIDEO_WIDTH / 2;
+    const centerY = VIDEO_HEIGHT / 2;
+
+    // Check if the element at the center looks like a Play button
+    const playInfo = await p.evaluate((x, y) => {
+      const el = document.elementFromPoint(x, y);
+      if (!el) {
+        return { isPlay: false, text: '' };
+      }
+
+      const text = (el.textContent || '').toLowerCase();
+      const aria = (el.getAttribute('aria-label') || '').toLowerCase();
+      const title = (el.getAttribute('title') || '').toLowerCase();
+
+      const combined = `${text} ${aria} ${title}`.trim();
+
+      const isPlay =
+        combined.includes('play') ||
+        combined.includes('resume') ||
+        combined.includes('watch');
+
+      return { isPlay, text: combined };
+    }, centerX, centerY);
+
+    if (playInfo.isPlay) {
+      await p.mouse.move(centerX, centerY);
+      await p.mouse.click(centerX, centerY, { button: 'left' });
+      console.log(
+        `[philo] center element looks like Play/Resume ("${playInfo.text}"), clicked at ${centerX},${centerY}`
+      );
+    } else {
+      console.log(
+        `[philo] center does NOT look like Play (saw "${playInfo.text}"), skipping center click`
+      );
+    }
+
+    // Wait a bit for playback / live controls to settle
+    await sleep(2000);
+
+    // Now handle "Jump to live" in bottom-right if present
+    const targetX = 1800;
+    const targetY = 540;
+
+    const jumpInfo = await p.evaluate((x, y) => {
+      const el = document.elementFromPoint(x, y);
+      if (!el) {
+        return { found: false, text: '' };
+      }
+      const text = (
+        (el.textContent || '') +
+        ' ' +
+        (el.getAttribute('aria-label') || '')
+      )
+        .toLowerCase()
+        .trim();
+
+      const isJump =
+        text.includes('jump to live') || text.includes('skip to live');
+
+      return { found: isJump, text };
+    }, targetX, targetY);
+
+    if (jumpInfo.found) {
+      await p.mouse.move(targetX, targetY, { steps: 40 });
+      await p.mouse.click(targetX, targetY, { button: 'left' });
+      console.log(
+        `[philo] found "Jump/Skip to live" and clicked at ${targetX},${targetY}`
+      );
+    } else {
+      console.log(
+        `[philo] no "Jump to live" text at ${targetX},${targetY}; saw "${jumpInfo.text}"`
+      );
+    }
+  } catch (err) {
+    console.warn('[philo] ensurePhiloLive error:', err.message);
   }
 }
 
@@ -245,19 +331,10 @@ async function tuneTo(url) {
   // Fast fullscreen (F11)
   await ensureFullScreen(p);
 
-  // PHILO: do NOT wait for .vjs-fullscreen-control; click live ASAP
   if (url.includes('philo.com')) {
-    console.log('[tuneTo] URL contains philo.com (fast live click)');
-    try {
-      // small delay just to let UI paint
-      await sleep(200);
-      await p.mouse.move(0, 0);
-      await p.mouse.move(1800, 540, { steps: 50 });
-      await p.mouse.click(1800, 540, { button: 'left' });
-      console.log('[tuneTo] Set Philo to Skip to Live');
-    } catch (e) {
-      console.log('[tuneTo] Error for philo.com:', e);
-    }
+    console.log('[tuneTo] URL contains philo.com (single play + live, 3s delay)');
+    await ensurePhiloLive(p);   // one pass: center play + conditional jump-to-live
+    await sleep(3000);          // give it 3 seconds to stabilize
   } else {
     // Non-philo sites still use the video.js fullscreen control
     await clickVideoJsFullscreen(p);
@@ -456,3 +533,4 @@ app.get('/stream/:name', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`HDMI Encoder Remote listening on port ${PORT}`);
 });
+
