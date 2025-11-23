@@ -1,6 +1,6 @@
 {
   "name": "chrome-hdmi-remote",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Remote-controlled Chrome instance for HDMI output (no capture/ffmpeg, just browser automation).",
   "main": "main.js",
   "private": true,
