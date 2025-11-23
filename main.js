@@ -4,11 +4,14 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const puppeteer = require('puppeteer-core');
+const http = require('http');
+const https = require('https');
+const { URL } = require('url');
 require('console-stamp')(console, {
-  format: ':date(yyyy/mm/dd HH:MM:ss.l)',
+  format: ':date(yyyy/MM/dd HH:MM:ss.l)',
 });
 
-// -------------------- Config helpers --------------------
+// ------------------- Config helpers --------------------
 
 function envBool(name, def = false) {
   const v = process.env[name];
@@ -21,6 +24,9 @@ const PORT =
 
 const VIDEO_WIDTH = Number(process.env.VIDEO_WIDTH || 1920);
 const VIDEO_HEIGHT = Number(process.env.VIDEO_HEIGHT || 1080);
+
+// How long to hold a "black" start before streaming TS (ms)
+const BLACKOUT_MS = Number(process.env.BLACKOUT_MS || 3000);
 
 const FULLSCREEN = envBool('FULLSCREEN', true);
 const KIOSK = envBool('KIOSK', true);
@@ -109,6 +115,13 @@ let currentUrl = null;
 let lastTuneAt = null;
 const upSince = new Date().toISOString();
 
+// Simple sleep helper (also used instead of page.waitForTimeout)
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// -------------------- Browser helpers --------------------
+
 async function getBrowser() {
   if (browser) return browser;
 
@@ -116,6 +129,7 @@ async function getBrowser() {
     executablePath: CHROME_EXECUTABLE,
     headless: false,
     defaultViewport: null,
+    ignoreDefaultArgs: ['--enable-automation'],
     args: [
       `--window-size=${VIDEO_WIDTH},${VIDEO_HEIGHT}`,
       '--window-position=0,0',
@@ -127,6 +141,7 @@ async function getBrowser() {
       '--autoplay-policy=no-user-gesture-required',
       '--force-webrtc-ip-handling-policy=default_public_interface_only',
       KIOSK ? '--kiosk' : '--start-maximized',
+      '--disable-blink-features=AutomationControlled',
       `--user-data-dir=${PROFILE_DIR}`,
     ],
     env: {
@@ -192,6 +207,24 @@ async function clickVideoJsFullscreen(p) {
   }
 }
 
+async function pressFullscreenKey(p) {
+  try {
+    // Give focus to the player area by clicking roughly in the center
+    await p.bringToFront();
+    await p.mouse.move(VIDEO_WIDTH / 2, VIDEO_HEIGHT / 2);
+    await p.mouse.click();
+
+    // Send the "f" key – many players treat this as "toggle fullscreen"
+    await p.keyboard.press('f');
+
+    console.log('[fullscreen] sent "f" key to page');
+  } catch (err) {
+    console.warn('[fullscreen] could not send "f" key:', err.message);
+  }
+}
+
+// ---------------------- Tuning logic ----------------------
+
 async function tuneTo(url) {
   if (!url) {
     throw new Error('No URL provided and DEFAULT_URL is empty');
@@ -199,6 +232,7 @@ async function tuneTo(url) {
 
   console.log(`tuning to ${url}`);
 
+  // No more closing browser on channel change – reuse the same page
   const p = await getPage();
 
   await p.bringToFront();
@@ -208,8 +242,26 @@ async function tuneTo(url) {
     timeout: 90_000,
   });
 
+  // Fast fullscreen (F11)
   await ensureFullScreen(p);
-  await clickVideoJsFullscreen(p);
+
+  // PHILO: do NOT wait for .vjs-fullscreen-control; click live ASAP
+  if (url.includes('philo.com')) {
+    console.log('[tuneTo] URL contains philo.com (fast live click)');
+    try {
+      // small delay just to let UI paint
+      await sleep(200);
+      await p.mouse.move(0, 0);
+      await p.mouse.move(1800, 540, { steps: 50 });
+      await p.mouse.click(1800, 540, { button: 'left' });
+      console.log('[tuneTo] Set Philo to Skip to Live');
+    } catch (e) {
+      console.log('[tuneTo] Error for philo.com:', e);
+    }
+  } else {
+    // Non-philo sites still use the video.js fullscreen control
+    await clickVideoJsFullscreen(p);
+  }
 
   currentUrl = url;
   lastTuneAt = new Date().toISOString();
@@ -312,6 +364,91 @@ app.post('/reload', async (req, res) => {
     res
       .status(500)
       .json({ ok: false, error: String(err.message || err || 'unknown') });
+  }
+});
+
+app.get('/stream/:name', async (req, res) => {
+  const name = String(req.params.name || '').toLowerCase();
+  const tsUrl = TS_SOURCES[name];
+  const chanUrl = PRESETS[name];
+
+  if (!tsUrl) {
+    res.status(404).json({
+      ok: false,
+      error: `No TS source for ${name}. Set TS_${name.toUpperCase()}=http://192.168.0.168/0.ts in env.`,
+    });
+    return;
+  }
+
+  const delayMs = Number(process.env.TUNE_DELAY_MS || 0);
+
+  // 1) Kick off Chrome tuning in the background (don't block the stream)
+  if (chanUrl) {
+    console.log(`[stream/${name}] async tuning to ${chanUrl}`);
+    (async () => {
+      try {
+        await tuneTo(chanUrl);
+        if (delayMs > 0) {
+          console.log(
+            `[stream/${name}] async waiting ${delayMs}ms for encoder to catch up`
+          );
+          await sleep(delayMs);
+        }
+        console.log(`[stream/${name}] async tune complete`);
+      } catch (err) {
+        console.error(`[stream/${name}] async tune failed:`, err);
+      }
+    })();
+  } else {
+    console.warn(
+      `[stream/${name}] no CHAN_${name.toUpperCase()} set, skipping tune step`
+    );
+  }
+
+  // 2) Proxy the TS from the hardware encoder (start immediately)
+  console.log(`[stream/${name}] proxying TS from ${tsUrl}`);
+
+  try {
+    if (BLACKOUT_MS > 0) {
+      console.log(`[stream/${name}] initial blackout ${BLACKOUT_MS}ms`);
+      await sleep(BLACKOUT_MS);
+    }
+
+    const target = new URL(tsUrl);
+    const client = target.protocol === 'https:' ? https : http;
+
+    const upstreamReq = client.request(target, (upstreamRes) => {
+      // Pass through status, but force TS content-type for Channels
+      res.statusCode = upstreamRes.statusCode || 200;
+      res.setHeader('Content-Type', 'video/mp2t');
+
+      upstreamRes.on('error', (err) => {
+        console.error(`[stream/${name}] upstream stream error:`, err);
+        res.destroy(err);
+      });
+
+      upstreamRes.pipe(res);
+    });
+
+    upstreamReq.on('error', (err) => {
+      console.error(`[stream/${name}] upstream request error:`, err);
+      if (!res.headersSent) {
+        res.statusCode = 502;
+        res.end('upstream error');
+      } else {
+        res.destroy(err);
+      }
+    });
+
+    upstreamReq.end();
+  } catch (err) {
+    console.error(`[stream/${name}] handler error:`, err);
+    if (!res.headersSent) {
+      res.statusCode = 500;
+      res.end('proxy error');
+    } else {
+      res.destroy(err);
+    }
   }
 });
 
