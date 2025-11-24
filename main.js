@@ -37,11 +37,11 @@ const PROFILE_DIR =
   process.env.PROFILE_DIR ||
   path.join(os.homedir(), '.chrome-hdmi-remote-profile');
 
-// Pull presets from env like CHAN_MSNOW, CHAN_CNN, etc.
+// Pull presets from env like CHAN_MSNBC, CHAN_ABC, etc.
 const PRESETS = {};
 for (const [key, value] of Object.entries(process.env)) {
   if (key.startsWith('CHAN_') && value) {
-    const name = key.slice(5).toLowerCase(); // CHAN_MSNOW -> 'msnow'
+    const name = key.slice(5).toLowerCase();
     PRESETS[name] = value;
   }
 }
@@ -49,7 +49,7 @@ for (const [key, value] of Object.entries(process.env)) {
 const TS_SOURCES = {};
 for (const [key, value] of Object.entries(process.env)) {
   if (key.startsWith('TS_') && value) {
-    const name = key.slice(3).toLowerCase(); // TS_MSNOW -> 'msnow'
+    const name = key.slice(3).toLowerCase();
     TS_SOURCES[name] = value;
   }
 }
@@ -145,7 +145,7 @@ async function getBrowser() {
       `--user-data-dir=${PROFILE_DIR}`,
     ],
     env: {
-      ...process.env, // important: propagate DISPLAY, etc.
+      ...process.env,
     },
   });
 
@@ -191,7 +191,6 @@ async function ensureFullScreen(p) {
 
 async function clickVideoJsFullscreen(p) {
   try {
-    // Wait up to 15s for the player controls to appear
     await p.waitForSelector('.vjs-fullscreen-control', { timeout: 15000 });
 
     await p.evaluate(() => {
@@ -207,7 +206,6 @@ async function clickVideoJsFullscreen(p) {
   }
 }
 
-// Optional generic fullscreen helper (not used right now, but kept)
 async function pressFullscreenKey(p) {
   try {
     await p.bringToFront();
@@ -220,92 +218,95 @@ async function pressFullscreenKey(p) {
   }
 }
 
-// Philo helper: click center to play, then conditionally click "Jump to live"
-// Philo helper: conditionally press center Play, then conditionally click "Jump to live"
+// ----------------- Philo helper -----------------
+// Wait for video to be ready, THEN fullscreen, THEN one click at 1800,540
 async function ensurePhiloLive(p) {
-  console.log('[philo] ensurePhiloLive: center play (if present) + conditional Jump to live');
+  console.log(
+    '[philo] ensurePhiloLive: wait for video, fullscreen, ONE click at 1800,540'
+  );
 
   try {
     await p.bringToFront();
 
-    // Give Philo time to load UI before we try to read/play anything
-    await sleep(3000);
+    // Wait for at least one <video> to reach readyState >= 2, up to 15s
+    const timeoutMs = 15000;
+    const start = Date.now();
+    let videoReady = false;
 
-    const centerX = VIDEO_WIDTH / 2;
-    const centerY = VIDEO_HEIGHT / 2;
+    while (Date.now() - start < timeoutMs) {
+      videoReady = await p.evaluate(() => {
+        const vids = Array.from(document.querySelectorAll('video'));
+        return vids.some((v) => v.readyState >= 2);
+      });
 
-    // Check if the element at the center looks like a Play button
-    const playInfo = await p.evaluate((x, y) => {
-      const el = document.elementFromPoint(x, y);
-      if (!el) {
-        return { isPlay: false, text: '' };
-      }
+      if (videoReady) break;
+      await sleep(500);
+    }
 
-      const text = (el.textContent || '').toLowerCase();
-      const aria = (el.getAttribute('aria-label') || '').toLowerCase();
-      const title = (el.getAttribute('title') || '').toLowerCase();
-
-      const combined = `${text} ${aria} ${title}`.trim();
-
-      const isPlay =
-        combined.includes('play') ||
-        combined.includes('resume') ||
-        combined.includes('watch');
-
-      return { isPlay, text: combined };
-    }, centerX, centerY);
-
-    if (playInfo.isPlay) {
-      await p.mouse.move(centerX, centerY);
-      await p.mouse.click(centerX, centerY, { button: 'left' });
-      console.log(
-        `[philo] center element looks like Play/Resume ("${playInfo.text}"), clicked at ${centerX},${centerY}`
-      );
+    if (videoReady) {
+      console.log('[philo] video element reported readyState >= 2');
     } else {
       console.log(
-        `[philo] center does NOT look like Play (saw "${playInfo.text}"), skipping center click`
+        '[philo] timeout waiting for video; continuing with fullscreen + click anyway'
       );
     }
 
-    // Wait a bit for playback / live controls to settle
-    await sleep(2000);
+    // Now go system-level fullscreen (F11)
+    await ensureFullScreen(p);
 
-    // Now handle "Jump to live" in bottom-right if present
-    const targetX = 1800;
-    const targetY = 540;
+    // Let layout adjust a bit
+    await sleep(500);
 
-    const jumpInfo = await p.evaluate((x, y) => {
-      const el = document.elementFromPoint(x, y);
-      if (!el) {
-        return { found: false, text: '' };
-      }
-      const text = (
-        (el.textContent || '') +
-        ' ' +
-        (el.getAttribute('aria-label') || '')
-      )
-        .toLowerCase()
-        .trim();
+    // One single click at (1800, 540)
+    const jumpX = 1800;
+    const jumpY = 540;
 
-      const isJump =
-        text.includes('jump to live') || text.includes('skip to live');
+    await p.mouse.move(jumpX, jumpY, { steps: 40 });
+    await p.mouse.click(jumpX, jumpY, { button: 'left' });
 
-      return { found: isJump, text };
-    }, targetX, targetY);
-
-    if (jumpInfo.found) {
-      await p.mouse.move(targetX, targetY, { steps: 40 });
-      await p.mouse.click(targetX, targetY, { button: 'left' });
-      console.log(
-        `[philo] found "Jump/Skip to live" and clicked at ${targetX},${targetY}`
-      );
-    } else {
-      console.log(
-        `[philo] no "Jump to live" text at ${targetX},${targetY}; saw "${jumpInfo.text}"`
-      );
-    }
+    console.log(`[philo] clicked once at ${jumpX},${jumpY}`);
   } catch (err) {
     console.warn('[philo] ensurePhiloLive error:', err.message);
+  }
+}
+
+// ----------------- ABC helper -----------------
+// ABC: wait 3s, click center, F, M, move pointer to top-right
+async function ensureAbcCenterFullscreenUnmuted(p) {
+  console.log('[abc] center click + F + M + move pointer to top-right');
+
+  try {
+    await p.bringToFront();
+
+    // Give ABC player a moment to render
+    await sleep(3000);
+
+    // 1) Click center to focus the player
+    const centerX = VIDEO_WIDTH / 2;
+    const centerY = VIDEO_HEIGHT / 2;
+    await p.mouse.move(centerX, centerY, { steps: 30 });
+    await p.mouse.click(centerX, centerY, { button: 'left' });
+    console.log(`[abc] clicked center at ${centerX},${centerY}`);
+
+    // 2) Press "f" for player fullscreen
+    await sleep(300);
+    await p.keyboard.press('f');
+    console.log('[abc] sent "f" for fullscreen');
+
+    // 3) Press "m" to toggle mute/unmute
+    await sleep(200);
+    await p.keyboard.press('m');
+    console.log('[abc] sent "m" for mute/unmute');
+
+    // 4) Move mouse to top-right corner
+    const topRightX = VIDEO_WIDTH - 10;
+    const topRightY = 10;
+    await p.mouse.move(topRightX, topRightY, { steps: 30 });
+    console.log(
+      `[abc] moved mouse to top-right at ${topRightX},${topRightY}`
+    );
+  } catch (err) {
+    console.warn('[abc] ensureAbcCenterFullscreenUnmuted error:', err.message);
   }
 }
 
@@ -317,8 +318,8 @@ async function tuneTo(url) {
   }
 
   console.log(`tuning to ${url}`);
+  const lowerUrl = url.toLowerCase();
 
-  // No more closing browser on channel change – reuse the same page
   const p = await getPage();
 
   await p.bringToFront();
@@ -328,16 +329,27 @@ async function tuneTo(url) {
     timeout: 90_000,
   });
 
-  // Fast fullscreen (F11)
-  await ensureFullScreen(p);
-
-  if (url.includes('philo.com')) {
-    console.log('[tuneTo] URL contains philo.com (single play + live, 3s delay)');
-    await ensurePhiloLive(p);   // one pass: center play + conditional jump-to-live
-    await sleep(3000);          // give it 3 seconds to stabilize
+  if (lowerUrl.includes('philo.com')) {
+    // PHILO: wait for video, THEN fullscreen, THEN single click at 1800,540
+    console.log(
+      '[tuneTo] URL contains philo.com (wait video -> fullscreen -> one click)'
+    );
+    await ensurePhiloLive(p);
   } else {
-    // Non-philo sites still use the video.js fullscreen control
-    await clickVideoJsFullscreen(p);
+    // Non-Philo: normal fullscreen first
+    await ensureFullScreen(p);
+
+    if (
+      lowerUrl.includes('abc.com') ||
+      lowerUrl.includes('abc.go.com')
+    ) {
+      console.log(
+        '[tuneTo] URL looks like ABC (center + F + M + top-right cursor)'
+      );
+      await ensureAbcCenterFullscreenUnmuted(p);
+    } else {
+      await clickVideoJsFullscreen(p);
+    }
   }
 
   currentUrl = url;
@@ -346,7 +358,7 @@ async function tuneTo(url) {
   console.log(`page is now at ${url}`);
 }
 
-// Periodic watchdog to keep Chrome alive-ish
+// Periodic watchdog
 setInterval(async () => {
   try {
     if (!browser) return;
@@ -459,7 +471,6 @@ app.get('/stream/:name', async (req, res) => {
 
   const delayMs = Number(process.env.TUNE_DELAY_MS || 0);
 
-  // 1) Kick off Chrome tuning in the background (don't block the stream)
   if (chanUrl) {
     console.log(`[stream/${name}] async tuning to ${chanUrl}`);
     (async () => {
@@ -482,7 +493,6 @@ app.get('/stream/:name', async (req, res) => {
     );
   }
 
-  // 2) Proxy the TS from the hardware encoder (start immediately)
   console.log(`[stream/${name}] proxying TS from ${tsUrl}`);
 
   try {
@@ -495,7 +505,6 @@ app.get('/stream/:name', async (req, res) => {
     const client = target.protocol === 'https:' ? https : http;
 
     const upstreamReq = client.request(target, (upstreamRes) => {
-      // Pass through status, but force TS content-type for Channels
       res.statusCode = upstreamRes.statusCode || 200;
       res.setHeader('Content-Type', 'video/mp2t');
 
@@ -533,4 +542,3 @@ app.get('/stream/:name', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`HDMI Encoder Remote listening on port ${PORT}`);
 });
-
