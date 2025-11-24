@@ -115,6 +115,9 @@ let currentUrl = null;
 let lastTuneAt = null;
 const upSince = new Date().toISOString();
 
+// For Philo "kick" cooldown
+let lastPhiloKickAt = 0;
+
 // Simple sleep helper
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -270,6 +273,50 @@ async function ensurePhiloLive(p) {
   }
 }
 
+// If we're on Philo and no video is currently playing, click (1800, 540) again
+async function ensurePhiloStillPlaying(p) {
+  try {
+    if (!currentUrl || !currentUrl.toLowerCase().includes('philo.com')) {
+      return;
+    }
+
+    const now = Date.now();
+    // Don't poke more than once every 10s
+    if (now - lastPhiloKickAt < 10_000) {
+      return;
+    }
+
+    const needClick = await p.evaluate(() => {
+      const vids = Array.from(document.querySelectorAll('video'));
+      if (!vids.length) return false;
+
+      const anyPlaying = vids.some(
+        (v) => !v.paused && !v.ended && v.readyState >= 2
+      );
+      return !anyPlaying; // we need a click if nothing is playing
+    });
+
+    if (!needClick) {
+      return;
+    }
+
+    lastPhiloKickAt = now;
+
+    const jumpX = 1800;
+    const jumpY = 540;
+
+    await p.bringToFront();
+    await p.mouse.move(jumpX, jumpY, { steps: 15 });
+    await p.mouse.click(jumpX, jumpY, { button: 'left' });
+
+    console.log(
+      `[philo] video appears stopped/paused; clicked ${jumpX},${jumpY} to kick it`
+    );
+  } catch (err) {
+    console.warn('[philo] ensurePhiloStillPlaying error:', err.message);
+  }
+}
+
 // ----------------- ABC helper -----------------
 // ABC: wait 3s, click center, F, M, move pointer to top-right
 async function ensureAbcCenterFullscreenUnmuted(p) {
@@ -362,14 +409,21 @@ async function tuneTo(url) {
 setInterval(async () => {
   try {
     if (!browser) return;
+
     if (!page || page.isClosed()) {
       console.warn('[watchdog] page missing, recreating');
       page = await getPage();
+      return;
+    }
+
+    // If we're on Philo, make sure the video hasn't silently stopped
+    if (currentUrl && currentUrl.toLowerCase().includes('philo.com')) {
+      await ensurePhiloStillPlaying(page);
     }
   } catch (err) {
     console.warn('[watchdog] error:', err.message);
   }
-}, 30_000);
+}, 10_000); // check every 10s
 
 // -------------------- HTTP API --------------------
 

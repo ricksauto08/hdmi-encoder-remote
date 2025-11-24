@@ -27,7 +27,7 @@ export TS_CC="http://192.168.0.168/0.ts"
 export TS_ABC="http://192.168.0.168/0.ts"
 # Optional: add more later if you know them, example:
 # export TS_MSNBC="http://192.168.0.168/1.ts"
-export BLACKOUT_MS=2000   # 2 seconds
+export BLACKOUT_MS=4500   # 4.5 seconds (original 2 seconds)
 # How long to wait after tuning Chrome before proxying TS (ms)
 export TUNE_DELAY_MS=0
 # ============================
