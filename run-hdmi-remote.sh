@@ -4,6 +4,9 @@ set -e
 # Use the HDMI/X display
 export DISPLAY=:0
 
+# Keep screen awake (no DPMS, no blank)
+xset s off -dpms s noblank || true
+
 # Make Chrome fill the screen
 export FULLSCREEN=1
 export KIOSK=1
@@ -31,3 +34,22 @@ export BLACKOUT_MS=4500   # 4.5 seconds (original 2 seconds)
 # How long to wait after tuning Chrome before proxying TS (ms)
 export TUNE_DELAY_MS=0
 # ============================
+
+# Added by channel-helper on 2025-11-24T14:00:36.246Z
+export CHAN_MTV="https://www.philo.com/player/player/channel/Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg2MDY"
+export TS_MTV="http://192.168.0.168/0.ts"
+
+# Added by channel-helper on 2025-11-24T17:08:31.764Z
+export CHAN_MTVLIVE="https://www.philo.com/player/player/channel/Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg4NTU"
+export TS_MTVLIVE="http://192.168.0.168/0.ts"
+
+# Added by channel-helper-web on 2025-11-26T02:29:51.734Z
+export CHAN_USA="https://www.usanetwork.com/live"
+export TS_USA="http://192.168.0.168/0.ts"
+
+# Added by channel-helper-web on 2025-11-26T15:15:01.574Z
+export CHAN_USA="https://www.usanetwork.com/live"
+export TS_USA="http://192.168.0.168/0.ts"
+
+cd "$HOME/hdmi-encoder-remote"
+node main.js

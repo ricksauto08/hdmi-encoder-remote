@@ -232,7 +232,7 @@ async function ensurePhiloLive(p) {
     await p.bringToFront();
 
     // Wait for at least one <video> to reach readyState >= 2, up to 15s
-    const timeoutMs = 15000;
+    const timeoutMs = 10000;
     const start = Date.now();
     let videoReady = false;
 
@@ -281,8 +281,8 @@ async function ensurePhiloStillPlaying(p) {
     }
 
     const now = Date.now();
-    // Don't poke more than once every 10s
-    if (now - lastPhiloKickAt < 10_000) {
+    // Don't poke more than once every 10s_____________________________set-to-3
+    if (now - lastPhiloKickAt < 3_000) {
       return;
     }
 

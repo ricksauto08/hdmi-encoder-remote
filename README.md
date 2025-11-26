@@ -68,3 +68,14 @@ cd hdmi-encoder-remote
 
 # Install Node dependencies
 npm install
+
+## Helper scripts
+
+This repo includes a few small helper tools that make managing HDMI channels and playlists easier.
+
+All of these are Node scripts. You can run them from the repo root like:
+
+```bash
+node channel-helper-web.js
+node backfill-playlist-from-run.js
+node fix-channel-numbers.js

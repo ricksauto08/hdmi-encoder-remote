@@ -1,0 +1,22 @@
+#EXTM3U
+
+#EXTINF:-1 channel-id="USA" tvg-name="USA" tvg-chno="38" group-title="HDMI",USA
+http://192.168.0.115:5589/stream/usa
+
+#EXTINF:-1 channel-id="MSNOW" tvg-name="MSNOW" tvg-chno="23" group-title="HDMI",MSNOW
+http://192.168.0.115:5589/stream/msnow
+
+#EXTINF:-1 channel-id="PARAMOUNT" tvg-name="PARAMOUNT" tvg-chno="41" group-title="HDMI",PARAMOUNT
+http://192.168.0.115:5589/stream/paramount
+
+#EXTINF:-1 channel-id="CC" tvg-name="CC" tvg-chno="50" group-title="HDMI",CC
+http://192.168.0.115:5589/stream/cc
+
+#EXTINF:-1 channel-id="ABC" tvg-name="ABC" tvg-chno="707" group-title="HDMI",ABC
+http://192.168.0.115:5589/stream/abc
+
+#EXTINF:-1 channel-id="MTV" tvg-name="MTV" tvg-chno="53" group-title="HDMI",MTV
+http://192.168.0.115:5589/stream/mtv
+
+#EXTINF:-1 channel-id="MTVLIVE" tvg-name="MTVLIVE" tvg-chno="55" group-title="HDMI",MTVLIVE
+http://192.168.0.115:5589/stream/mtvlive
