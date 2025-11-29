@@ -5,3 +5,14 @@ npm-debug.log*
 main.js.bak*
 main.js.backup-older
 main.js.save*
+# Ignore backup tarballs and snapshots
+backups/
+
+# Ignore channel-helper-web variants
+channel-helper-web-20251127-190407.js
+channel-helper-web.bak.js
+channel-helper-web.js
+
+# Ignore specific backup files of run-hdmi-remote.sh
+backup-20251126-141027
+backup-20251126-141037

@@ -1,0 +1,3 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="5087" tvg-name="Stargate" tvg-chno="48" channel-id="5087" tvg-logo="https://images.pluto.tv/channels/620bfa7df72827000703ddb1/colorLogoPNG.png" tvc-guide-stationid="stargate" group-title="HD",Stargate
+http://192.168.0.115:8090/devices/M3U-Pluto/channels/5087/stream.mpg?format=ts&codec=copy

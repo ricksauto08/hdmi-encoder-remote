@@ -47,17 +47,9 @@ export TS_MTVLIVE="http://192.168.0.168/0.ts"
 export CHAN_USA="https://www.usanetwork.com/live"
 export TS_USA="http://192.168.0.168/0.ts"
 
-# Added by channel-helper-web on 2025-11-27T01:18:45.235Z
-export CHAN_SYFY="https://www.usanetwork.com/live"
-export TS_SYFY="http://192.168.0.168/0.ts"
-
-# Added by channel-helper-web on 2025-11-29T02:28:02.805Z
-export CHAN_E="https://www.usanetwork.com/live"
-export TS_E="http://192.168.0.168/0.ts"
-
-# Added by channel-helper-web on 2025-11-29T16:27:57.656Z
-export CHAN_BRAVO="https://www.nbc.com/live?brand=bravo&callsign=BRAVOHD"
-export TS_BRAVO="http://192.168.0.168/0.ts"
+# Added by channel-helper-web on 2025-11-26T15:15:01.574Z
+export CHAN_USA="https://www.usanetwork.com/live"
+export TS_USA="http://192.168.0.168/0.ts"
 
 cd "$HOME/hdmi-encoder-remote"
 node main.js

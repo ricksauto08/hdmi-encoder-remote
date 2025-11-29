@@ -1,0 +1,293 @@
+#EXTM3U
+# Source: TVE-Philo
+
+#EXTINF:-1 channel-id="6014" tvg-id="6014" tvg-chno="6014" tvg-logo="https://tmsimg.fancybits.co/assets/s60046_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="60046" tvg-name="VH1HD" group-title="HD",VH1
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6014/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6018" tvg-id="6018" tvg-chno="6018" tvg-logo="https://tmsimg.fancybits.co/assets/s63236_h3_ba.png?w=360&h=270" tvc-guide-stationid="63236" tvg-name="BETHD" group-title="HD",BET
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6018/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6043" tvg-id="6043" tvg-chno="6043" tvg-logo="https://tmsimg.fancybits.co/assets/s51529_h3_ba.png?w=360&h=270" tvc-guide-stationid="51529" tvg-name="AETVHD" group-title="HD",AETV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6043/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6044" tvg-id="6044" tvg-chno="6044" tvg-logo="https://tmsimg.fancybits.co/assets/s14771_ll_h15_af.png?w=360&h=270" tvc-guide-stationid="14771" tvg-name="HISTORY" group-title="HD",HISTORY
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6044/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6045" tvg-id="6045" tvg-chno="6045" tvg-logo="https://tmsimg.fancybits.co/assets/s58988_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="58988" tvg-name="FYIHD" group-title="HD",FYI
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6045/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6046" tvg-id="6046" tvg-chno="6046" tvg-logo="https://tmsimg.fancybits.co/assets/s60150_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="60150" tvg-name="LIFEHD" group-title="HD",LIFETIME
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6046/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6085" tvg-id="6085" tvg-chno="6085" tvg-logo="https://tmsimg.fancybits.co/assets/s92041_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="92041" tvg-name="SUNSTR" group-title="HD",SUNDANCE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6085/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6086" tvg-id="6086" tvg-chno="6086" tvg-logo="https://tmsimg.fancybits.co/assets/s59337_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="59337" tvg-name="AMCHD" group-title="HD",AMC
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6086/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6087" tvg-id="6087" tvg-chno="6087" tvg-logo="https://tmsimg.fancybits.co/assets/s64492_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="64492" tvg-name="BBCAHD" group-title="HD",BBCA
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6087/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6088" tvg-id="6088" tvg-chno="6088" tvg-logo="https://tmsimg.fancybits.co/assets/s92008_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="92008" tvg-name="IFCSTR" group-title="HD",IFC
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6088/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6089" tvg-id="6089" tvg-chno="6089" tvg-logo="https://tmsimg.fancybits.co/assets/s92020_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="92020" tvg-name="WETVSTR" group-title="HD",WETV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6089/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6090" tvg-id="6090" tvg-chno="6090" tvg-logo="https://tmsimg.fancybits.co/assets/s66268_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="66268" tvg-name="HALLHD" group-title="HD",HALLMARK
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6090/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6091" tvg-id="6091" tvg-chno="6091" tvg-logo="https://tmsimg.fancybits.co/assets/s46710_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="46710" tvg-name="HMYSHD" group-title="HD",HALLMARKMM
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6091/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6092" tvg-id="6092" tvg-chno="6092" tvg-logo="https://tmsimg.fancybits.co/assets/s105723_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="105723" tvg-name="HFM" group-title="HD",HALLMARKDRAMA
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6092/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6100" tvg-id="6100" tvg-chno="6100" tvg-logo="https://tmsimg.fancybits.co/assets/s70388_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="70388" tvg-name="OWNHD" group-title="HD",OWN
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6100/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6101" tvg-id="6101" tvg-chno="6101" tvg-logo="https://tmsimg.fancybits.co/assets/s56905_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="56905" tvg-name="DSCHD" group-title="HD",DISCOVERY
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6101/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6102" tvg-id="6102" tvg-chno="6102" tvg-logo="https://tmsimg.fancybits.co/assets/s50747_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="50747" tvg-name="FOODHD" group-title="HD",FOOD
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6102/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6103" tvg-id="6103" tvg-chno="6103" tvg-logo="https://tmsimg.fancybits.co/assets/s57394_ll_h9_ad.png?w=360&h=270" tvc-guide-stationid="57394" tvg-name="APLHD" group-title="HD",ANIMAL-PLANET
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6103/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6104" tvg-id="6104" tvg-chno="6104" tvg-logo="https://tmsimg.fancybits.co/assets/s49788_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="49788" tvg-name="HGTVD" group-title="HD",HGTV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6104/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6105" tvg-id="6105" tvg-chno="6105" tvg-logo="https://tmsimg.fancybits.co/assets/s57391_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="57391" tvg-name="TLCHD" group-title="HD",TLC
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6105/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6106" tvg-id="6106" tvg-chno="6106" tvg-logo="https://tmsimg.fancybits.co/assets/s59303_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="59303" tvg-name="TRAVHD" group-title="HD",TRAVEL
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6106/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6107" tvg-id="6107" tvg-chno="6107" tvg-logo="https://tmsimg.fancybits.co/assets/s65342_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="65342" tvg-name="IDHD" group-title="HD",INVESTIGATION-DISCOVERY
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6107/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6108" tvg-id="6108" tvg-chno="6108" tvg-logo="https://tmsimg.fancybits.co/assets/s67375_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="67375" tvg-name="MAGNHD" group-title="HD",DIY
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6108/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6109" tvg-id="6109" tvg-chno="6109" tvg-logo="https://tmsimg.fancybits.co/assets/s68065_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="68065" tvg-name="COOKHD" group-title="HD",COOKING-CHANNEL
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6109/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6110" tvg-id="6110" tvg-chno="6110" tvg-logo="https://tmsimg.fancybits.co/assets/s57390_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="57390" tvg-name="SCIHD" group-title="HD",SCIENCE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6110/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6111" tvg-id="6111" tvg-chno="6111" tvg-logo="https://tmsimg.fancybits.co/assets/s78808_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="78808" tvg-name="AHCHD" group-title="HD",AHC
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6111/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6112" tvg-id="6112" tvg-chno="6112" tvg-logo="https://tmsimg.fancybits.co/assets/s60468_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="60468" tvg-name="DESTHD" group-title="HD",DESTINATION-AMERICA
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6112/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6113" tvg-id="6113" tvg-chno="6113" tvg-logo="https://tmsimg.fancybits.co/assets/s92204_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="92204" tvg-name="DLCHD" group-title="HD",DISCOVERY-LIFE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6113/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6114" tvg-id="6114" tvg-chno="6114" tvg-logo="https://tmsimg.fancybits.co/assets/s31046_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="31046" tvg-name="MTHD" group-title="HD",MOTORTREND
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6114/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6700" tvg-id="6700" tvg-chno="6700" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-RICKANDMORTY" group-title="HD",AS-RICKANDMORTY
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6700/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6701" tvg-id="6701" tvg-chno="6701" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-THEERICANDRE" group-title="HD",AS-THEERICANDRE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6701/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6702" tvg-id="6702" tvg-chno="6702" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-THEVENTUREBROS" group-title="HD",AS-THEVENTUREBROS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6702/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6703" tvg-id="6703" tvg-chno="6703" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-OFFTHEAIR" group-title="HD",AS-OFFTHEAIR
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6703/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6704" tvg-id="6704" tvg-chno="6704" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-MRPICKLES" group-title="HD",AS-MRPICKLES
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6704/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6705" tvg-id="6705" tvg-chno="6705" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-ROBOTCHICKEN" group-title="HD",AS-ROBOTCHICKEN
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6705/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6706" tvg-id="6706" tvg-chno="6706" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-BLACKJESUS" group-title="HD",AS-BLACKJESUS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6706/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6707" tvg-id="6707" tvg-chno="6707" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-AQUATEENHUNGER" group-title="HD",AS-AQUATEENHUNGER
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6707/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6708" tvg-id="6708" tvg-chno="6708" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-SAMURAIJACK" group-title="HD",AS-SAMURAIJACK
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6708/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6709" tvg-id="6709" tvg-chno="6709" tvg-logo="" tvc-guide-stationid="" tvg-name="AS-INFOMERCIALS" group-title="HD",AS-INFOMERCIALS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6709/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6725" tvg-id="6725" tvg-chno="6725" tvg-logo="https://tmsimg.fancybits.co/assets/GNLZZGG0029CYRH.png?w=360&h=270" tvc-guide-stationid="121307" tvg-name="FWX" group-title="HD",FXW
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6725/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6750" tvg-id="6750" tvg-chno="6750" tvg-logo="https://tmsimg.fancybits.co/assets/s93430_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="73163" tvg-name="WYBNLD" group-title="HD",BUZZR
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6750/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6751" tvg-id="6751" tvg-chno="6751" tvg-logo="https://tmsimg.fancybits.co/assets/s97051_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="35044" tvg-name="WRGBDT3" group-title="HD",COMET
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6751/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6752" tvg-id="6752" tvg-chno="6752" tvg-logo="https://tmsimg.fancybits.co/assets/s102148_h3_ba.png?w=360&h=270" tvc-guide-stationid="52329" tvg-name="WCWNDT2" group-title="HD",CHARGE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6752/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6755" tvg-id="6755" tvg-chno="6755" tvg-logo="https://tmsimg.fancybits.co/assets/s102116_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="102116" tvg-name="ROARTV" group-title="HD",ROARTV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6755/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6756" tvg-id="6756" tvg-chno="6756" tvg-logo="https://tmsimg.fancybits.co/assets/s110480_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="110480" tvg-name="DOVESTR" group-title="HD",DOVE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6756/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6760" tvg-id="6760" tvg-chno="6760" tvg-logo="https://tmsimg.fancybits.co/assets/s107241_ll_h15_ae.png?w=360&h=270" tvc-guide-stationid="107241" tvg-name="CBNSTR" group-title="HD",CHEDDAR
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6760/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6762" tvg-id="6762" tvg-chno="6762" tvg-logo="https://tmsimg.fancybits.co/assets/s110291_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="110291" tvg-name="CMVMIX" group-title="HD",ETLIVE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6762/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6765" tvg-id="6765" tvg-chno="6765" tvg-logo="https://tmsimg.fancybits.co/assets/s108919_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="108919" tvg-name="CBSSPHQ" group-title="HD",CBSSPORTSHQ
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6765/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6766" tvg-id="6766" tvg-chno="6766" tvg-logo="https://tmsimg.fancybits.co/assets/s104846_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="104846" tvg-name="CBSNSTR" group-title="HD",CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6766/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6767" tvg-id="6767" tvg-chno="6767" tvg-logo="https://tmsimg.fancybits.co/assets/s113380_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="113380" tvg-name="ABCNL" group-title="HD",ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6767/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6768" tvg-id="6768" tvg-chno="6768" tvg-logo="https://tmsimg.fancybits.co/assets/s71799_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="71799" tvg-name="BLOOMHD" group-title="HD",BLOOMBERG
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6768/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6769" tvg-id="6769" tvg-chno="6769" tvg-logo="https://tmsimg.fancybits.co/assets/s59155_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="59155" tvg-name="NHKWRLD" group-title="HD",NHKWORLD
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6769/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6770" tvg-id="6770" tvg-chno="6770" tvg-logo="https://tmsimg.fancybits.co/assets/s111043_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="111043" tvg-name="COURT" group-title="HD",COURTTV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6770/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6771" tvg-id="6771" tvg-chno="6771" tvg-logo="https://tmsimg.fancybits.co/assets/s79318_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="79318" tvg-name="DWEUR" group-title="HD",DW
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6771/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6772" tvg-id="6772" tvg-chno="6772" tvg-logo="" tvc-guide-stationid="97502" tvg-name="CASHD" group-title="HD",CAS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6772/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6774" tvg-id="6774" tvg-chno="6774" tvg-logo="https://tmsimg.fancybits.co/assets/s91404_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="91404" tvg-name="CMC" group-title="HD",CMC
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6774/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6776" tvg-id="6776" tvg-chno="6776" tvg-logo="https://tmsimg.fancybits.co/assets/s72422_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="72422" tvg-name="WTHRNHD" group-title="HD",WEATHERNATION
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6776/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6778" tvg-id="6778" tvg-chno="6778" tvg-logo="https://tmsimg.fancybits.co/assets/s16220_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="16220" tvg-name="FSTV" group-title="HD",FSTV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6778/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6780" tvg-id="6780" tvg-chno="6780" tvg-logo="https://tmsimg.fancybits.co/assets/s55559_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="55559" tvg-name="ALJZENG" group-title="HD",ALJAZEERA
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6780/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6784" tvg-id="6784" tvg-chno="6784" tvg-logo="https://tmsimg.fancybits.co/assets/s126864_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="126864" tvg-name="LXHSTR" group-title="HD",LX
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6784/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6787" tvg-id="6787" tvg-chno="6787" tvg-logo="https://tmsimg.fancybits.co/assets/s89360_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="89360" tvg-name="POSTHD" group-title="HD",POSTV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6787/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6788" tvg-id="6788" tvg-chno="6788" tvg-logo="https://tmsimg.fancybits.co/assets/s107076_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="107076" tvg-name="TASTE" group-title="HD",TASTEMADE
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6788/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6789" tvg-id="6789" tvg-chno="6789" tvg-logo="https://tmsimg.fancybits.co/assets/s96827_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="96827" tvg-name="SCNEWS" group-title="HD",NEWSY
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6789/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6790" tvg-id="6790" tvg-chno="6790" tvg-logo="https://tmsimg.fancybits.co/assets/s133691_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="133691" tvg-name="GOLAZO" group-title="HD",GOLAZO
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6790/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6791" tvg-id="6791" tvg-chno="6791" tvg-logo="https://tmsimg.fancybits.co/assets/s147367_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="105440" tvg-name="WCWNDT4" group-title="HD",THENEST
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6791/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6900" tvg-id="6900" tvg-chno="6900" tvg-logo="https://tmsimg.fancybits.co/assets/s10183_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="10183" tvg-name="EWTN" group-title="HD",EWTN
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6900/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6901" tvg-id="6901" tvg-chno="6901" tvg-logo="https://tmsimg.fancybits.co/assets/s44861_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="44861" tvg-name="EPLUSTV" group-title="HD",EPLUSTV
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6901/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6902" tvg-id="6902" tvg-chno="6902" tvg-logo="https://tmsimg.fancybits.co/assets/s114494_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="114494" tvg-name="CAGNEWS" group-title="HD",GLOBALNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6902/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6903" tvg-id="6903" tvg-chno="6903" tvg-logo="https://tmsimg.fancybits.co/assets/s120551_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="120551" tvg-name="ACUWNW" group-title="HD",ACCUWEATHER
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6903/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6951" tvg-id="6951" tvg-chno="6951" tvg-logo="https://tmsimg.fancybits.co/assets/s62077_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="62077" tvg-name="HSNHD" group-title="HD",HSN
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6951/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6952" tvg-id="6952" tvg-chno="6952" tvg-logo="https://tmsimg.fancybits.co/assets/s99450_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="99450" tvg-name="HSN2HD" group-title="HD",HSN2
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6952/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6953" tvg-id="6953" tvg-chno="6953" tvg-logo="https://tmsimg.fancybits.co/assets/s60222_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="60222" tvg-name="QVCHD" group-title="HD",QVC
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6953/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6954" tvg-id="6954" tvg-chno="6954" tvg-logo="https://tmsimg.fancybits.co/assets/s82696_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="82696" tvg-name="QVC2HD" group-title="HD",QVC2
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6954/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6955" tvg-id="6955" tvg-chno="6955" tvg-logo="https://tmsimg.fancybits.co/assets/s102337_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="102337" tvg-name="QVC3HD" group-title="HD",QVC3
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6955/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6970" tvg-id="6970" tvg-chno="6970" tvg-logo="https://tmsimg.fancybits.co/assets/s123125_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123125" tvg-name="CBSNWNY" group-title="HD",NY-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6970/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6972" tvg-id="6972" tvg-chno="6972" tvg-logo="https://tmsimg.fancybits.co/assets/s123126_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123126" tvg-name="CBSNWLA" group-title="HD",LA-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6972/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6973" tvg-id="6973" tvg-chno="6973" tvg-logo="" tvc-guide-stationid="" tvg-name="LA-KTLA" group-title="HD",LA-KTLA
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6973/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6974" tvg-id="6974" tvg-chno="6974" tvg-logo="https://tmsimg.fancybits.co/assets/s123130_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123130" tvg-name="CBSNWBO" group-title="HD",BOS-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6974/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6975" tvg-id="6975" tvg-chno="6975" tvg-logo="https://tmsimg.fancybits.co/assets/s123121_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123121" tvg-name="CBSNWBA" group-title="HD",SF-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6975/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6976" tvg-id="6976" tvg-chno="6976" tvg-logo="https://tmsimg.fancybits.co/assets/s123119_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123119" tvg-name="CBSNWMN" group-title="HD",MINN-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6976/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6977" tvg-id="6977" tvg-chno="6977" tvg-logo="https://tmsimg.fancybits.co/assets/s123120_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123120" tvg-name="CBSNWCO" group-title="HD",DEN-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6977/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6978" tvg-id="6978" tvg-chno="6978" tvg-logo="https://tmsimg.fancybits.co/assets/s123129_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123129" tvg-name="CBSNWPI" group-title="HD",PIT-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6978/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6979" tvg-id="6979" tvg-chno="6979" tvg-logo="https://tmsimg.fancybits.co/assets/s123128_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="123128" tvg-name="CBSNWPH" group-title="HD",PHI-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6979/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6980" tvg-id="6980" tvg-chno="6980" tvg-logo="https://tmsimg.fancybits.co/assets/s123122_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123122" tvg-name="CBSNWCH" group-title="HD",CHI-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6980/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6981" tvg-id="6981" tvg-chno="6981" tvg-logo="https://tmsimg.fancybits.co/assets/s123123_ll_h9_ab.png?w=360&h=270" tvc-guide-stationid="123123" tvg-name="CBSNTX" group-title="HD",DAL-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6981/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6982" tvg-id="6982" tvg-chno="6982" tvg-logo="https://tmsimg.fancybits.co/assets/s123124_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123124" tvg-name="CBSNWSA" group-title="HD",SAC-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6982/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6983" tvg-id="6983" tvg-chno="6983" tvg-logo="https://tmsimg.fancybits.co/assets/s123127_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123127" tvg-name="CBSNWBL" group-title="HD",BAL-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6983/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6984" tvg-id="6984" tvg-chno="6984" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131575" tvg-name="ABCNYST" group-title="HD",NY-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6984/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6985" tvg-id="6985" tvg-chno="6985" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131577" tvg-name="ABCLAST" group-title="HD",LA-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6985/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6986" tvg-id="6986" tvg-chno="6986" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131578" tvg-name="ABCBAST" group-title="HD",SF-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6986/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6987" tvg-id="6987" tvg-chno="6987" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131574" tvg-name="ABCCHST" group-title="HD",CHI-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6987/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6988" tvg-id="6988" tvg-chno="6988" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131580" tvg-name="ABCPHST" group-title="HD",PHI-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6988/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6989" tvg-id="6989" tvg-chno="6989" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131576" tvg-name="ABCHOST" group-title="HD",HOU-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6989/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6990" tvg-id="6990" tvg-chno="6990" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131581" tvg-name="ABCCCST" group-title="HD",FRESNO-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6990/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6991" tvg-id="6991" tvg-chno="6991" tvg-logo="https://tmsimg.fancybits.co/assets/s10003_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="131579" tvg-name="ABCNCST" group-title="HD",RALEIGH-ABCNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6991/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6992" tvg-id="6992" tvg-chno="6992" tvg-logo="https://tmsimg.fancybits.co/assets/s123380_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="123380" tvg-name="CBSNWMI" group-title="HD",MIA-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6992/stream.mpg?format=ts&codec=copy
+
+#EXTINF:-1 channel-id="6993" tvg-id="6993" tvg-chno="6993" tvg-logo="https://tmsimg.fancybits.co/assets/s126738_ll_h9_aa.png?w=360&h=270" tvc-guide-stationid="126738" tvg-name="CBSNWDT" group-title="HD",DET-CBSNEWS
+http://192.168.0.115:8090/devices/TVE-Philo/channels/6993/stream.mpg?format=ts&codec=copy

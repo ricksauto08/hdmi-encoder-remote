@@ -1,0 +1,83 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="6007" tvg-name="CSPANHD" tvg-chno="77" channel-id="6007" tvg-logo="https://tmsimg.fancybits.co/assets/s68344_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="68344" group-title="HD",CSPANHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6007/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6008" tvg-name="CSPN2HD" tvg-chno="79" channel-id="6008" tvg-logo="https://tmsimg.fancybits.co/assets/s68334_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="68334" group-title="HD",CSPN2HD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6008/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6009" tvg-name="CSPN3HD" tvg-chno="102" channel-id="6009" tvg-logo="https://tmsimg.fancybits.co/assets/s68332_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="68332" group-title="HD",CSPN3HD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6009/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6030" tvg-name="CNNHD" tvg-chno="25" channel-id="6030" tvg-logo="https://tmsimg.fancybits.co/assets/s58646_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="58646" group-title="HD",CNNHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6030/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6031" tvg-name="HLNHD" tvg-chno="59" channel-id="6031" tvg-logo="https://tmsimg.fancybits.co/assets/s64549_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="64549" group-title="HD",HLNHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6031/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6033" tvg-name="TBSHD" tvg-chno="39" channel-id="6033" tvg-logo="https://tmsimg.fancybits.co/assets/s58515_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="58515" group-title="HD",TBSHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6033/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6035" tvg-name="TNTHD" tvg-chno="37" channel-id="6035" tvg-logo="https://tmsimg.fancybits.co/assets/s42642_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="42642" group-title="HD",TNTHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6035/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6037" tvg-name="TRUTVHD" tvg-chno="58" channel-id="6037" tvg-logo="https://tmsimg.fancybits.co/assets/s64490_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="64490" group-title="HD",TRUTVHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6037/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6070" tvg-name="NGCHD" tvg-chno="162" channel-id="6070" tvg-logo="https://tmsimg.fancybits.co/assets/s49438_h3_aa.png?w=360&h=270" tvc-guide-stationid="49438" group-title="HD",NGCHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6070/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6073" tvg-name="FNCHD" tvg-chno="26" channel-id="6073" tvg-logo="https://tmsimg.fancybits.co/assets/s60179_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="60179" group-title="HD",FNCHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6073/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6074" tvg-name="FBNHD" tvg-chno="106" channel-id="6074" tvg-logo="https://tmsimg.fancybits.co/assets/s58718_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="58718" group-title="HD",FBNHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6074/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6080" tvg-name="FXHD" tvg-chno="40" channel-id="6080" tvg-logo="https://tmsimg.fancybits.co/assets/s58574_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="58574" group-title="HD",FXHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6080/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6090" tvg-name="HALLHD" tvg-chno="92" channel-id="6090" tvg-logo="https://tmsimg.fancybits.co/assets/s66268_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="66268" group-title="HD",HALLHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6090/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6091" tvg-name="HMYSHD" tvg-chno="91" channel-id="6091" tvg-logo="https://tmsimg.fancybits.co/assets/s46710_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="46710" group-title="HD",HMYSHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6091/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6092" tvg-name="HFM" tvg-chno="93" channel-id="6092" tvg-logo="https://tmsimg.fancybits.co/assets/s105723_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="105723" group-title="HD",HFM
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6092/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6095" tvg-name="REELZ" tvg-chno="177" channel-id="6095" tvg-logo="https://tmsimg.fancybits.co/assets/s52199_ll_h9_ac.png?w=360&h=270" tvc-guide-stationid="52199" group-title="HD",REELZ
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6095/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6102" tvg-name="FOODHD" tvg-chno="66" channel-id="6102" tvg-logo="https://tmsimg.fancybits.co/assets/s50747_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="50747" group-title="HD",FOODHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6102/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6104" tvg-name="HGTVD" tvg-chno="30" channel-id="6104" tvg-logo="https://tmsimg.fancybits.co/assets/s49788_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="49788" group-title="HD",HGTVD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6104/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6114" tvg-name="MTHD" tvg-chno="150" channel-id="6114" tvg-logo="https://tmsimg.fancybits.co/assets/s31046_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="31046" group-title="HD",MTHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6114/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6120" tvg-name="DISNHD" tvg-chno="125" channel-id="6120" tvg-logo="https://tmsimg.fancybits.co/assets/s59684_ll_h15_ae.png?w=360&h=270" tvc-guide-stationid="59684" group-title="HD",DISNHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6120/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6122" tvg-name="DJCHHD" tvg-chno="126" channel-id="6122" tvg-logo="https://tmsimg.fancybits.co/assets/s74885_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="74885" group-title="HD",DJCHHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6122/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6126" tvg-name="FREFMHD" tvg-chno="49" channel-id="6126" tvg-logo="https://tmsimg.fancybits.co/assets/s59615_ll_h15_ae.png?w=360&h=270" tvc-guide-stationid="59615" group-title="HD",FREFMHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6126/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6140" tvg-name="ESPNHD" tvg-chno="36" channel-id="6140" tvg-logo="https://tmsimg.fancybits.co/assets/s32645_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="32645" group-title="HD",ESPNHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6140/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6141" tvg-name="ESPN2HD" tvg-chno="35" channel-id="6141" tvg-logo="https://tmsimg.fancybits.co/assets/s45507_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="45507" group-title="HD",ESPN2HD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6141/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6197" tvg-name="FS1HD" tvg-chno="213" channel-id="6197" tvg-logo="https://tmsimg.fancybits.co/assets/s82547_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="82547" group-title="HD",FS1HD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6197/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6725" tvg-name="FWX" tvg-chno="193" channel-id="6725" tvg-logo="https://tmsimg.fancybits.co/assets/GNLZZGG0029CYRH.png?w=360&h=270" tvc-guide-stationid="121307" group-title="HD",FWX
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6725/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6750" tvg-name="WYBNLD" tvg-chno="95" channel-id="6750" tvg-logo="https://tmsimg.fancybits.co/assets/s93430_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="73163" group-title="HD",WYBNLD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6750/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6751" tvg-name="WRGBDT3" tvg-chno="148" channel-id="6751" tvg-logo="https://tmsimg.fancybits.co/assets/s97051_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="35044" group-title="HD",WRGBDT3
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6751/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6752" tvg-name="WCWNDT2" tvg-chno="108" channel-id="6752" tvg-logo="https://tmsimg.fancybits.co/assets/s102148_h3_ba.png?w=360&h=270" tvc-guide-stationid="52329" group-title="HD",WCWNDT2
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6752/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6755" tvg-name="ROARTV" tvg-chno="134" channel-id="6755" tvg-logo="https://tmsimg.fancybits.co/assets/s102116_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="102116" group-title="HD",ROARTV
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6755/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6760" tvg-name="CBNSTR" tvg-chno="100" channel-id="6760" tvg-logo="https://tmsimg.fancybits.co/assets/s107241_ll_h15_ae.png?w=360&h=270" tvc-guide-stationid="107241" group-title="HD",CBNSTR
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6760/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6765" tvg-name="CBSSPHQ" tvg-chno="215" channel-id="6765" tvg-logo="https://tmsimg.fancybits.co/assets/s108919_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="108919" group-title="HD",CBSSPHQ
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6765/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6768" tvg-name="BLOOMHD" tvg-chno="105" channel-id="6768" tvg-logo="https://tmsimg.fancybits.co/assets/s71799_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="71799" group-title="HD",BLOOMHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6768/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6770" tvg-name="COURT" tvg-chno="60" channel-id="6770" tvg-logo="https://tmsimg.fancybits.co/assets/s111043_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="111043" group-title="HD",COURT
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6770/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6784" tvg-name="LXHSTR" tvg-chno="146" channel-id="6784" tvg-logo="https://tmsimg.fancybits.co/assets/s126864_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="126864" group-title="HD",LXHSTR
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6784/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6788" tvg-name="TASTE" tvg-chno="169" channel-id="6788" tvg-logo="https://tmsimg.fancybits.co/assets/s107076_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="107076" group-title="HD",TASTE
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6788/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6903" tvg-name="ACUWNW" tvg-chno="6" channel-id="6903" tvg-logo="https://tmsimg.fancybits.co/assets/s120551_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="120551" group-title="HD",ACUWNW
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6903/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6951" tvg-name="HSNHD" tvg-chno="8" channel-id="6951" tvg-logo="https://tmsimg.fancybits.co/assets/s62077_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="62077" group-title="HD",HSNHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6951/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6952" tvg-name="HSN2HD" tvg-chno="94" channel-id="6952" tvg-logo="https://tmsimg.fancybits.co/assets/s99450_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="99450" group-title="HD",HSN2HD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6952/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6953" tvg-name="QVCHD" tvg-chno="15" channel-id="6953" tvg-logo="https://tmsimg.fancybits.co/assets/s60222_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="60222" group-title="HD",QVCHD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6953/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6954" tvg-name="QVC2HD" tvg-chno="183" channel-id="6954" tvg-logo="https://tmsimg.fancybits.co/assets/s82696_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="82696" group-title="HD",QVC2HD
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6954/stream.mpg?format=ts&codec=copy
