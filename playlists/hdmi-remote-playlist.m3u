@@ -1,31 +1,19 @@
 #EXTM3U
-
-#EXTINF:-1 channel-id="SYFY" tvg-name="SYFY" tvg-chno="67" group-title="HDMI",SYFY
+#EXTINF:-1 tvg-name="SYFY" tvg-chno="67" channel-id="SYFY" group-title="HDMI",SYFY
 http://192.168.0.115:5589/stream/syfy
-
-#EXTINF:-1 channel-id="MSNOW" tvg-name="MSNOW" tvg-chno="23" group-title="HDMI",MSNOW
+#EXTINF:-1 tvg-name="MSNOW" tvg-chno="23" channel-id="MSNOW" group-title="HDMI",MSNOW
 http://192.168.0.115:5589/stream/msnow
-
-#EXTINF:-1 channel-id="PARAMOUNT" tvg-name="PARAMOUNT" tvg-chno="41" group-title="HDMI",PARAMOUNT
+#EXTINF:-1 tvg-name="PARAMOUNT" tvg-chno="41" channel-id="PARAMOUNT" group-title="HDMI",PARAMOUNT
 http://192.168.0.115:5589/stream/paramount
-
-#EXTINF:-1 channel-id="CC" tvg-name="CC" tvg-chno="50" group-title="HDMI",CC
+#EXTINF:-1 tvg-name="CC" tvg-chno="50" channel-id="CC" group-title="HDMI",CC
 http://192.168.0.115:5589/stream/cc
-
-#EXTINF:-1 channel-id="ABC" tvg-name="ABC" tvg-chno="707" group-title="HDMI",ABC
-http://192.168.0.115:5589/stream/abc
-
-#EXTINF:-1 channel-id="MTV" tvg-name="MTV" tvg-chno="53" group-title="HDMI",MTV
+#EXTINF:-1 tvg-name="MTV" tvg-chno="53" channel-id="MTV" group-title="HDMI",MTV
 http://192.168.0.115:5589/stream/mtv
-
-#EXTINF:-1 channel-id="MTVLIVE" tvg-name="MTVLIVE" tvg-chno="55" group-title="HDMI",MTVLIVE
+#EXTINF:-1 tvg-name="MTVLIVE" tvg-chno="55" channel-id="MTVLIVE" group-title="HDMI",MTVLIVE
 http://192.168.0.115:5589/stream/mtvlive
-
-#EXTINF:-1 channel-id="USA" tvg-name="USA" tvg-chno="38" group-title="HDMI",USA
+#EXTINF:-1 tvg-name="USA" tvg-chno="38" channel-id="USA" group-title="HDMI",USA
 http://192.168.0.115:5589/stream/usa
-
-#EXTINF:-1 channel-id="E" tvg-name="E" tvg-chno="51" group-title="HDMI",E
+#EXTINF:-1 tvg-name="E" tvg-chno="51" channel-id="E" group-title="HDMI",E
 http://192.168.0.115:5589/stream/e
-
-#EXTINF:-1 channel-id="BRAVO" tvg-name="BRAVO" tvg-chno="44" group-title="HDMI",BRAVO
+#EXTINF:-1 tvg-name="BRAVO" tvg-chno="44" channel-id="BRAVO" group-title="HDMI",BRAVO
 http://192.168.0.115:5589/stream/bravo

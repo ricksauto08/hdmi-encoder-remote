@@ -1,4 +1,10 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="6001" tvg-name="WABCDT" tvg-chno="7" channel-id="6001" tvg-logo="https://tmsimg.fancybits.co/assets/s28708_h3_aa.png?w=360&h=270" tvc-guide-stationid="20453" group-title="HD",WABCDT
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6001/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6002" tvg-name="WNYWDT" tvg-chno="5" channel-id="6002" tvg-logo="https://tmsimg.fancybits.co/assets/s28719_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="20360" group-title="HD",WNYWDT
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6002/stream.mpg?format=ts&codec=copy
+#EXTINF:-1 tvg-id="6003" tvg-name="WCBSDT" tvg-chno="2" channel-id="6003" tvg-logo="https://tmsimg.fancybits.co/assets/s28711_h3_ba.png?w=360&h=270" tvc-guide-stationid="16689" group-title="HD",WCBSDT
+http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6003/stream.mpg?format=ts&codec=copy
 #EXTINF:-1 tvg-id="6007" tvg-name="CSPANHD" tvg-chno="77" channel-id="6007" tvg-logo="https://tmsimg.fancybits.co/assets/s68344_ll_h15_ad.png?w=360&h=270" tvc-guide-stationid="68344" group-title="HD",CSPANHD
 http://192.168.0.115:8090/devices/TVE-Cablevision/channels/6007/stream.mpg?format=ts&codec=copy
 #EXTINF:-1 tvg-id="6008" tvg-name="CSPN2HD" tvg-chno="79" channel-id="6008" tvg-logo="https://tmsimg.fancybits.co/assets/s68334_ll_h15_ac.png?w=360&h=270" tvc-guide-stationid="68334" group-title="HD",CSPN2HD

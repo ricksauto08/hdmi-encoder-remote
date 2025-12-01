@@ -16,3 +16,7 @@ channel-helper-web.js
 # Ignore specific backup files of run-hdmi-remote.sh
 backup-20251126-141027
 backup-20251126-141037
+backups/
+hdmi-channels.env
+node_modules/
+*.tar.gz

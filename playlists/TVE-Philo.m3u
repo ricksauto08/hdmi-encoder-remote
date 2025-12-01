@@ -75,8 +75,6 @@ http://192.168.0.115:8090/devices/TVE-Philo/channels/6765/stream.mpg?format=ts&c
 http://192.168.0.115:8090/devices/TVE-Philo/channels/6768/stream.mpg?format=ts&codec=copy
 #EXTINF:-1 tvg-id="6770" tvg-name="COURT" tvg-chno="60" channel-id="6770" tvg-logo="https://tmsimg.fancybits.co/assets/s111043_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="111043" group-title="HD",COURT
 http://192.168.0.115:8090/devices/TVE-Philo/channels/6770/stream.mpg?format=ts&codec=copy
-#EXTINF:-1 tvg-id="6776" tvg-name="WTHRNHD" tvg-chno="6776" channel-id="6776" tvg-logo="https://tmsimg.fancybits.co/assets/s72422_ll_h15_aa.png?w=360&h=270" tvc-guide-stationid="72422" group-title="HD",WTHRNHD
-http://192.168.0.115:8090/devices/TVE-Philo/channels/6776/stream.mpg?format=ts&codec=copy
 #EXTINF:-1 tvg-id="6784" tvg-name="LXHSTR" tvg-chno="146" channel-id="6784" tvg-logo="https://tmsimg.fancybits.co/assets/s126864_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="126864" group-title="HD",LXHSTR
 http://192.168.0.115:8090/devices/TVE-Philo/channels/6784/stream.mpg?format=ts&codec=copy
 #EXTINF:-1 tvg-id="6788" tvg-name="TASTE" tvg-chno="169" channel-id="6788" tvg-logo="https://tmsimg.fancybits.co/assets/s107076_ll_h15_ab.png?w=360&h=270" tvc-guide-stationid="107076" group-title="HD",TASTE

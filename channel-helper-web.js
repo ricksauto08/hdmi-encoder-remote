@@ -3,6 +3,8 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const express = require('express');
+const { spawn } = require('child_process');  // ⬅️ add this
+const CHANNEL_ENV_PATH = path.join(__dirname, 'hdmi-channels.env');
 
 // --- Defaults you can tweak here ---
 const RUN_SCRIPT_PATH = path.join(__dirname, 'run-hdmi-remote.sh');
@@ -86,6 +88,44 @@ function loadGeneratedPlaylistsFromDisk() {
 
 // Call immediately so per-source /playlist/<name>.m3u works after reboot
 loadGeneratedPlaylistsFromDisk();
+
+// --- HDMI Remote process management via systemd ---
+// We let systemd own run-hdmi-remote.sh, and just tell it to restart.
+
+function refreshHdmiRemote() {
+  return new Promise((resolve, reject) => {
+    console.log(
+      `[helper] restarting systemd service ${HDMI_REMOTE_SERVICE} ...`
+    );
+
+    const child = spawn('systemctl', ['restart', HDMI_REMOTE_SERVICE], {
+      stdio: 'inherit',
+    });
+
+    child.on('error', (err) => {
+      console.error(
+        `[helper] failed to run systemctl restart ${HDMI_REMOTE_SERVICE}:`,
+        err
+      );
+      reject(err);
+    });
+
+    child.on('exit', (code) => {
+      if (code === 0) {
+        console.log(
+          `[helper] systemctl restart ${HDMI_REMOTE_SERVICE} completed successfully`
+        );
+        resolve();
+      } else {
+        const err = new Error(
+          `systemctl restart exited with code ${code} for ${HDMI_REMOTE_SERVICE}`
+        );
+        console.error('[helper]', err.message);
+        reject(err);
+      }
+    });
+  });
+}
 
 // ---------------- helpers ----------------
 
@@ -212,7 +252,16 @@ function parseM3UEntries(text) {
     const tvgId = attrs['tvg-id'] || attrs['tvg_id'] || '';
     const tvgChno = attrs['tvg-chno'] || attrs['tvg_chno'] || '';
     const tvgLogo = attrs['tvg-logo'] || attrs['tvg_logo'] || '';
-    const origChno = tvgChno || channelId || '';
+
+    // Smarter "original channel" logic:
+    // - If tvg-chno and channel-id differ, treat channel-id as the original
+    // - Otherwise fall back to tvg-chno or channel-id
+    let origChno = '';
+    if (tvgChno && channelId && tvgChno !== channelId) {
+      origChno = channelId;
+    } else {
+      origChno = tvgChno || channelId || '';
+    }
 
     entries.push({
       extinfLine: line,
@@ -225,7 +274,7 @@ function parseM3UEntries(text) {
       tvgChno,
       tvgLogo,
       origChno,
-      newChno: '', // will be filled from the form
+      newChno: '', // will be filled from the form (or from saved playlist)
     });
   }
 
@@ -288,29 +337,36 @@ function renderMainPage({
           const encoded = encodeURIComponent(s);
           const playlistUrl = `/playlist/${encoded}.m3u`;
           const channelsUrl = `/channels/${encoded}`;
+          const editUrl = `/import/edit/${encoded}`;
           const refreshAction = `/playlist/${encoded}/refresh`;
           const deleteAction = `/playlist/${encoded}/delete`;
           return `
-        <li>
-          <span class="source-name">${escapeHtml(s)}</span>
-          <div class="source-actions">
-            <a href="${playlistUrl}" target="_blank" class="playlist-btn">
-              📄 M3U Playlist Link
-            </a>
-            <a href="${channelsUrl}" target="_blank" class="playlist-btn">
-              📺 New Channel # List
-            </a>
-            <form method="post" action="${refreshAction}">
-              <button type="submit" class="mini-btn">⟳ Reload from disk</button>
-            </form>
-            <form method="post" action="${deleteAction}" onsubmit="return confirm('Delete playlist ${escapeHtml(
+        <li class="source-row">
+          <div class="source-main">
+            <div class="source-name">${escapeHtml(s)}</div>
+            <div class="source-actions">
+              <a href="${playlistUrl}" target="_blank" class="playlist-btn">
+                📄 M3U Playlist Link
+              </a>
+              <a href="${channelsUrl}" target="_blank" class="playlist-btn">
+                📺 New Channel # List
+              </a>
+              <a href="${editUrl}" class="playlist-btn">
+                ✏️ Edit / renumber
+              </a>
+              <form method="post" action="${refreshAction}">
+                <button type="submit" class="mini-btn">⟳ Reload from disk</button>
+              </form>
+            </div>
+          </div>
+          <form method="post" action="${deleteAction}" class="delete-form"
+            onsubmit="return confirm('Delete playlist ${escapeHtml(
               s
             )}? This cannot be undone.');">
-              <button type="submit" class="mini-btn" style="border-color:#b91c1c;color:#fecaca;">
-                🗑 Delete
-              </button>
-            </form>
-          </div>
+            <button type="submit" class="mini-btn delete-btn">
+              🗑 Delete
+            </button>
+          </form>
         </li>`;
         })
         .join('\n')
@@ -321,6 +377,7 @@ function renderMainPage({
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HDMI Encoder Channel Helper</title>
   <style>
     body {
@@ -329,19 +386,17 @@ function renderMainPage({
       margin: 0;
       padding: 0;
       color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      /* no flex centering on main page – full viewport */
     }
     .card {
       background: #020617;
-      border-radius: 16px;
+      border-radius: 0;           /* full-width slab */
       padding: 24px 28px;
-      max-width: 760px;
-      width: 100%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      width: 100%;                /* take full page width */
+      min-height: 100vh;          /* fill viewport height */
+      box-shadow: none;
       border: 1px solid #1f2937;
+      box-sizing: border-box;
     }
     h1 {
       margin-top: 0;
@@ -532,26 +587,35 @@ function renderMainPage({
       padding-left: 0;
       margin: 6px 0 0 0;
     }
-    .source-list li {
-      margin-bottom: 4px;
+    .source-row {
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .source-main {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      flex: 1 1 auto;
+      min-width: 0;
     }
     .source-name {
       font-weight: 600;
       color: #e5e7eb;
-      flex: 0 0 auto;
     }
     .source-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-left: auto;
-      align-items: center;
     }
     .source-actions form {
+      margin: 0;
+    }
+    .delete-form {
+      flex: 0 0 auto;
       margin: 0;
     }
     .mini-btn {
@@ -566,17 +630,56 @@ function renderMainPage({
     .mini-btn:hover {
       border-color: #a5b4fc;
     }
+    .mini-btn.delete-btn {
+      border-color: #b91c1c;
+      color: #fecaca;
+    }
+
+    /* --- Mobile tweaks --- */
+    @media (max-width: 768px) {
+      .card {
+        padding: 16px 14px;
+      }
+      form {
+        grid-template-columns: 1fr; /* single column on phones */
+      }
+      .button-row {
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .url-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .source-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .source-actions {
+        width: 100%;
+      }
+      .playlist-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
+    <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
       <h1>HDMI Encoder Remote – Channel Helper</h1>
-      <a href="http://${escapeHtml(
-        DEFAULT_HDMI_IP
-      )}:8090" target="_blank" class="playlist-btn">
-        🧠 Channels DVR Backend
-      </a>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <button type="button" id="refresh-remote-btn" class="mini-btn">
+          🔄 Restart HDMI Remote
+        </button>
+        <a href="http://${escapeHtml(
+          DEFAULT_HDMI_IP
+        )}:8090" target="_blank" class="playlist-btn">
+          🧠 Channels DVR Backend
+        </a>
+      </div>
     </div>
     <div class="subtitle">
       Fill this out to update <code>run-hdmi-remote.sh</code> and auto-build an M3U playlist for Channels DVR.
@@ -764,7 +867,6 @@ function renderMainPage({
           select.appendChild(group);
         }
       }
-
       function init() {
         var urlInput = document.getElementById('channelUrlInput');
         var select = document.getElementById('urlPresetSelect');
@@ -832,6 +934,34 @@ function renderMainPage({
           saveCustomPresets(customPresets);
           rebuildSelect(select, customPresets);
         });
+
+        // 🔄 Wire up the "Restart HDMI Remote" button
+        var refreshBtn = document.getElementById('refresh-remote-btn');
+        if (refreshBtn) {
+          refreshBtn.addEventListener('click', function () {
+            var originalText = refreshBtn.textContent;
+            refreshBtn.disabled = true;
+            refreshBtn.textContent = 'Restarting…';
+
+            fetch('/refresh-remote', { method: 'POST' })
+              .then(function (res) {
+                if (!res.ok) throw new Error('Server error ' + res.status);
+                return res.json().catch(function () { return {}; });
+              })
+              .then(function () {
+                refreshBtn.textContent = '✅ Restarted';
+                setTimeout(function () {
+                  refreshBtn.textContent = originalText;
+                  refreshBtn.disabled = false;
+                }, 2000);
+              })
+              .catch(function (err) {
+                window.alert('Failed to restart HDMI Remote: ' + err.message);
+                refreshBtn.textContent = originalText;
+                refreshBtn.disabled = false;
+              });
+          });
+        }
       }
 
       if (document.readyState === 'loading') {
@@ -841,13 +971,13 @@ function renderMainPage({
       }
     })();
   </script>
+
 </body>
 </html>
 `;
 }
 
 // ------------- Render Import Playlist page -------------
-
 function renderImportPage({
   sourceUrl,
   sourceName,
@@ -894,6 +1024,7 @@ function renderImportPage({
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Import Playlist – HDMI Channel Helper</title>
   <style>
     body {
@@ -915,6 +1046,7 @@ function renderImportPage({
       width: 100%;
       box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       border: 1px solid #1f2937;
+      box-sizing: border-box;
     }
     h1 {
       margin-top: 0;
@@ -1090,11 +1222,32 @@ function renderImportPage({
       border-radius: 6px;
       border: 1px solid #111827;
     }
+
+    /* --- Mobile tweaks --- */
+    @media (max-width: 768px) {
+      .card {
+        padding: 16px 14px;
+      }
+      .top-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .top-form > div {
+        flex: 1 1 auto;
+      }
+      .top-form button {
+        width: 100%;
+        margin-top: 8px;
+      }
+      .table-wrap {
+        max-height: 60vh;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
       <h1>Import Playlist – HDMI Channel Helper</h1>
       <a class="back-link" href="/">← Back to Add Channel</a>
     </div>
@@ -1206,7 +1359,6 @@ function renderChannelListPage({ sourceName, entries }) {
       const chno = e.tvgChno || e.origChno || '';
       const name = e.tvgName || e.displayName || '';
 
-      // 🔧 be extra defensive about where we pull logo from
       const logoUrl =
         e.tvgLogo ||
         (e.attrs && (e.attrs['tvg-logo'] || e.attrs['tvg_logo'])) ||
@@ -1219,7 +1371,7 @@ function renderChannelListPage({ sourceName, entries }) {
              height:32px;
              object-fit:contain;
              border-radius:6px;
-             background:#4b5563;   /* medium gray behind logo */
+             background:#4b5563;
              padding:4px;
            "/>`
         : `<span style="opacity:0.6;">no logo</span>`;
@@ -1262,6 +1414,7 @@ function renderChannelListPage({ sourceName, entries }) {
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Channels – ${escapeHtml(safeName)}</title>
   <style>
     body {
@@ -1283,6 +1436,7 @@ function renderChannelListPage({ sourceName, entries }) {
       width: 100%;
       box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       border: 1px solid #1f2937;
+      box-sizing: border-box;
     }
     h1 {
       margin-top: 0;
@@ -1344,11 +1498,21 @@ function renderChannelListPage({ sourceName, entries }) {
       border: 1px solid #1f2937;
       margin-top: 8px;
     }
+
+    /* --- Mobile tweaks --- */
+    @media (max-width: 768px) {
+      .card {
+        padding: 16px 14px;
+      }
+      .table-wrap {
+        max-height: 60vh;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
       <h1>Channels – ${escapeHtml(safeName)}</h1>
       <a class="back-link" href="/">← Back to Channel Helper</a>
     </div>
@@ -1369,6 +1533,16 @@ function renderChannelListPage({ sourceName, entries }) {
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+
+app.post('/refresh-remote', async (req, res) => {
+  try {
+    await refreshHdmiRemote();
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Error refreshing HDMI Remote:', err);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
 
 // --------- Main Add Channel / M3U builder ---------
 
@@ -1463,55 +1637,47 @@ app.post('/create', (req, res) => {
   let error = null;
   const infoLines = [];
 
-  try {
-    // --- rewrite run-hdmi-remote.sh, keep cd/node at bottom ---
-    let existing = '';
     try {
-      existing = fs.readFileSync(RUN_SCRIPT_PATH, 'utf8');
+    // --- update hdmi-channels.env instead of run-hdmi-remote.sh ---
+    let envText = '';
+    try {
+      envText = fs.readFileSync(CHANNEL_ENV_PATH, 'utf8');
     } catch (readErr) {
       if (readErr.code !== 'ENOENT') {
         throw readErr;
       }
-      existing = '';
+      envText = '';
     }
 
-    const lines = existing.split(/\r?\n/);
-    const kept = [];
-    const launchLines = [];
+    const lines = envText.split(/\r?\n/);
 
-    for (const line of lines) {
+    const chanPrefix = `export CHAN_${upperName}=`;
+    const tsPrefix   = `export TS_${upperName}=`;
+
+    // Drop any existing lines for this channel
+    const filtered = lines.filter((line) => {
       const trimmed = line.trim();
+      return (
+        trimmed &&
+        !trimmed.startsWith(chanPrefix) &&
+        !trimmed.startsWith(tsPrefix)
+      );
+    });
 
-      if (!trimmed) {
-        kept.push(line);
-        continue;
-      }
+    // Append fresh definitions
+    filtered.push(
+      `# ${upperName} added by channel-helper-web on ${new Date().toISOString()}`,
+      chanLine,
+      tsLine,
+      ''
+    );
 
-      const isCd =
-        trimmed.includes('cd') && trimmed.includes('hdmi-encoder-remote');
-      const isNode = trimmed.includes('node') && trimmed.includes('main.js');
+    const newEnvText = filtered.join('\n');
+    fs.writeFileSync(CHANNEL_ENV_PATH, newEnvText, 'utf8');
 
-      if (isCd || isNode) {
-        if (!launchLines.includes(line)) {
-          launchLines.push(line);
-        }
-      } else {
-        kept.push(line);
-      }
-    }
-
-    if (launchLines.length === 0) {
-      launchLines.push('cd "$HOME/hdmi-encoder-remote"', 'node main.js');
-    }
-
-    let newContent = kept.join('\n').replace(/\s+$/, '') + '\n';
-    newContent += block;
-    newContent += '\n' + launchLines.join('\n') + '\n';
-
-    fs.writeFileSync(RUN_SCRIPT_PATH, newContent, 'utf8');
     infoLines.push(chanLine, tsLine);
   } catch (err) {
-    error = `Could not update ${RUN_SCRIPT_PATH}: ${err.message}`;
+    error = `Could not update ${CHANNEL_ENV_PATH}: ${err.message}`;
   }
 
   const m3uSnippet = `#EXTINF:-1 channel-id="${upperName}" tvg-name="${upperName}" tvg-chno="${chno}" group-title="HDMI",${upperName}
@@ -1742,6 +1908,90 @@ app.get('/import', (req, res) => {
       message: '',
       error: '',
       outputPlaylist: importState.outputPlaylist || '',
+    })
+  );
+});
+// Open an existing per-source playlist in the Import UI for editing
+app.get('/import/edit/:name', (req, res) => {
+  const requestedName = req.params.name;
+  const wantedLower = (requestedName + '.m3u').toLowerCase();
+
+  let files = [];
+  try {
+    files = fs.readdirSync(PLAYLISTS_DIR);
+  } catch (err) {
+    console.error('[import/edit] error reading playlists dir:', err);
+    return res.send(
+      renderImportPage({
+        sourceUrl: '',
+        sourceName: requestedName,
+        entries: [],
+        message: '',
+        error: 'Could not read playlists directory on disk.',
+        outputPlaylist: '',
+      })
+    );
+  }
+
+  const match = files.find((f) => f.toLowerCase() === wantedLower);
+  if (!match) {
+    console.warn(`[import/edit] no file found for "${requestedName}"`);
+    return res.send(
+      renderImportPage({
+        sourceUrl: '',
+        sourceName: requestedName,
+        entries: [],
+        message: '',
+        error: `No playlist file found for "${requestedName}".`,
+        outputPlaylist: '',
+      })
+    );
+  }
+
+  const filePath = path.join(PLAYLISTS_DIR, match);
+  let plText = '';
+  try {
+    plText = fs.readFileSync(filePath, 'utf8');
+  } catch (err) {
+    console.error('[import/edit] failed to read', filePath, err);
+    return res.send(
+      renderImportPage({
+        sourceUrl: '',
+        sourceName: requestedName,
+        entries: [],
+        message: '',
+        error: `Failed to read playlist file: ${err.message}`,
+        outputPlaylist: '',
+      })
+    );
+  }
+
+  // Parse existing playlist and pre-fill "New Channel #" with current tvg-chno
+  const entries = parseM3UEntries(plText);
+  for (const e of entries) {
+    if (!e.newChno && e.tvgChno) {
+      e.newChno = String(e.tvgChno);
+    }
+  }
+
+  const sourceName = match.replace(/\.m3u$/i, '');
+
+  // Update in-memory import state so /import/update works as usual
+  importState = {
+    sourceUrl: '', // unknown (we're editing a local file)
+    sourceName,
+    entries,
+    outputPlaylist: '',
+  };
+
+  return res.send(
+    renderImportPage({
+      sourceUrl: '',
+      sourceName,
+      entries,
+      message: `Loaded playlist "${sourceName}" from disk for editing.`,
+      error: '',
+      outputPlaylist: '',
     })
   );
 });
