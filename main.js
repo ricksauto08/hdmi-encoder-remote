@@ -220,7 +220,7 @@ async function clickVideoJsFullscreen(p) {
   }
 }
 
-// ------------------ Nbc Helper / generic fullscreen ------------------
+// ------------------ Generic fullscreen helper ------------------
 
 async function forceFullscreen(page, streamId) {
   try {
@@ -229,7 +229,6 @@ async function forceFullscreen(page, streamId) {
       `[fullscreen] trying to go fullscreen for ${streamId} on ${url}`
     );
 
-    // A bunch of likely fullscreen selectors
     const selectorCandidates = [
       '.vjs-fullscreen-control',
       'button.vjs-fullscreen-control',
@@ -246,16 +245,16 @@ async function forceFullscreen(page, streamId) {
           visible: true,
         });
         if (btn) {
+
           await btn.click();
           console.log(`[fullscreen] clicked ${sel} for ${streamId}`);
           return;
         }
-      } catch (err) {
-        // just try the next selector
+      } catch {
+        // try next selector
       }
     }
 
-    // Fallback 1: keyboard "f" (common for web players)
     try {
       await page.keyboard.press('f');
       console.log(`[fullscreen] pressed "f" key for ${streamId}`);
@@ -265,7 +264,6 @@ async function forceFullscreen(page, streamId) {
       );
     }
 
-    // Fallback 2: JS fullscreen on the <video> element
     try {
       const ok = await page.evaluate(() => {
         const vid = document.querySelector('video');
@@ -306,8 +304,7 @@ async function ensurePhiloLive(p) {
   try {
     await p.bringToFront();
 
-    // Wait for at least one <video> to reach readyState >= 2
-    const timeoutMs = 10000;
+    const timeoutMs = 2000;
     const start = Date.now();
     let videoReady = false;
 
@@ -318,7 +315,7 @@ async function ensurePhiloLive(p) {
       });
 
       if (videoReady) break;
-      await sleep(500);
+      await sleep(900);
     }
 
     if (videoReady) {
@@ -329,13 +326,10 @@ async function ensurePhiloLive(p) {
       );
     }
 
-    // Now go system-level fullscreen (F11)
     await ensureFullScreen(p);
 
-    // Let layout adjust a bit
     await sleep(500);
 
-    // One single click at (1800, 540)
     const jumpX = 1800;
     const jumpY = 540;
 
@@ -356,8 +350,7 @@ async function ensurePhiloStillPlaying(p) {
     }
 
     const now = Date.now();
-    // Don't poke more than once every 3s
-    if (now - lastPhiloKickAt < 3000) {
+    if (now - lastPhiloKickAt < 1000) {
       return;
     }
 
@@ -368,7 +361,7 @@ async function ensurePhiloStillPlaying(p) {
       const anyPlaying = vids.some(
         (v) => !v.paused && !v.ended && v.readyState >= 2
       );
-      return !anyPlaying; // we need a click if nothing is playing
+      return !anyPlaying;
     });
 
     if (!needClick) {
@@ -393,71 +386,36 @@ async function ensurePhiloStillPlaying(p) {
 }
 
 // ----------------- ABC helper -----------------
-// ABC: wait 3s, click center, try to force-unmute, then F, then move pointer away
+// ABC: wait ~4s, click center, send "m" then "f", move mouse to top-right
 async function ensureAbcCenterFullscreenUnmuted(p) {
-  console.log('[abc] center click + unmute + F + move pointer to top-right');
+  console.log('[abc] simple helper: wait 4s, center click, "m", "f", move mouse');
 
   try {
     await p.bringToFront();
 
-    // Give ABC player a moment to render
-    await sleep(3000);
+    // Give ABC time to finish its initial ad / layout
+    await sleep(50); //@@@@@@@@@@@@@@@@@@@@@@@@@ was 4s @@@@@@@@@@@@@@@@@@@@
 
-    // 1) Click center to focus the player (counts as a user gesture)
     const centerX = VIDEO_WIDTH / 2;
     const centerY = VIDEO_HEIGHT / 2;
-    await p.mouse.move(centerX, centerY, { steps: 30 });
+    await p.mouse.move(centerX, centerY, { steps: 25 });
     await p.mouse.click(centerX, centerY, { button: 'left' });
     console.log(`[abc] clicked center at ${centerX},${centerY}`);
 
-    // 2) Try to force-unmute any <video> tags (same-origin case)
-    let stillMuted = false;
-    try {
-      stillMuted = await p.evaluate(() => {
-        const vids = Array.from(document.querySelectorAll('video'));
-        if (!vids.length) return false;
+    // Small gap, then mute toggle
+    await sleep(100);
+    await p.keyboard.press('m');
+    console.log('[abc] sent "m" key to toggle mute');
 
-        let anyMuted = false;
-        for (const v of vids) {
-          try {
-            v.muted = false;
-            v.volume = 1.0;
-            if (v.paused && v.readyState >= 2) {
-              v.play().catch(() => {});
-            }
-            if (v.muted || v.volume === 0) {
-              anyMuted = true;
-            }
-          } catch {
-            // ignore per-video errors
-          }
-        }
-        return anyMuted;
-      });
-      console.log(
-        `[abc] force-unmute attempt done; any videos still flagged muted: ${stillMuted}`
-      );
-    } catch (e) {
-      console.warn(
-        '[abc] error trying to force-unmute via video.muted=false:',
-        e.message
-      );
-      stillMuted = true;
-    }
-
-    if (stillMuted) {
-      await sleep(150);
-      await p.keyboard.press('m');
-      console.log('[abc] sent "m" key to toggle mute');
-    }
-
-    await sleep(250);
+    // Short wait, then fullscreen key
+    await sleep(500);
     await p.keyboard.press('f');
-    console.log('[abc] sent "f" for fullscreen');
+    console.log('[abc] sent "f" key for player fullscreen');
 
+    // Move mouse to top-right to let controls hide
     const topRightX = VIDEO_WIDTH - 10;
     const topRightY = 10;
-    await p.mouse.move(topRightX, topRightY, { steps: 30 });
+    await p.mouse.move(topRightX, topRightY, { steps: 20 });
     console.log(
       `[abc] moved mouse to top-right at ${topRightX},${topRightY}`
     );
@@ -466,115 +424,130 @@ async function ensureAbcCenterFullscreenUnmuted(p) {
   }
 }
 
-// ----------------- Generic helper for non-Philo sites -----------------
-// Make sure at least one <video> is actually playing.
-// If we see a video element but it's not playing, we do multiple center clicks.
-// ms.now / msnow gets extra forgiveness if detection fails.
+// ----------------- Generic helper (FAST+PLAY, with ms.now "no click" special case) -----------------
+// Make sure at least one <video> is actually playing when we can see it.
+// For ms.now, we *don't* try to click play/unmute at all – we let the page load
+// and leave playback/mute state alone.
 async function ensureGenericVideoPlaying(p, siteLabel) {
-  const label = (siteLabel || '').toString();
-  const lowerLabel = label.toLowerCase();
-  const isMsNow =
-    lowerLabel === 'msnow' ||
-    lowerLabel.includes('ms.now') ||
-    lowerLabel.includes('msnow');
+  const label = String(siteLabel || '').toLowerCase();
 
-  console.log('[generic] ensure video playing for', label || '(unknown)');
-
-  const centerX = VIDEO_WIDTH / 2;
-  const centerY = VIDEO_HEIGHT / 2;
-
-  const totalTimeoutMs = 12000;   // overall watchdog window
-  const initialWaitMs = 6000;     // give autoplay a chance
-  const pollMs = 800;
-
-  async function hasPlayingVideo() {
+  // ----- ms.now special path: DO NOT CLICK ANYTHING -----
+  if (label === 'msnow' || label.includes('ms.now')) {
+    console.log('[generic/msnow] letting player load with no auto-play clicks');
     try {
-      return await p.evaluate(() => {
-        const vids = Array.from(document.querySelectorAll('video'));
-        if (!vids.length) return false;
-        return vids.some((v) => {
-          try {
-            return !v.paused && !v.ended && v.readyState >= 2;
-          } catch {
-            return false;
-          }
-        });
-      });
-    } catch {
-      // cross-origin iframe, etc.
-      return false;
+      await p.bringToFront();
+      // Just give the page a few seconds to settle (ads, overlays, etc.)
+      await sleep(5000);
+    } catch (err) {
+      console.warn('[generic/msnow] error while waiting:', err.message);
     }
+    // No <video> inspection, no center click, no play button.
+    return;
   }
 
-  async function waitForPlayback(ms) {
-    const deadline = Date.now() + ms;
-    while (Date.now() < deadline) {
-      if (await hasPlayingVideo()) {
-        return true;
-      }
-      await sleep(pollMs);
-    }
-    return false;
-  }
+  // ----- Normal path for everybody else -----
+  console.log(
+    '[generic] (FAST+PLAY) ensure video playing for',
+    label || '(unknown)'
+  );
 
   try {
     await p.bringToFront();
 
-    // 1) See if it starts by itself
-    if (await waitForPlayback(initialWaitMs)) {
-      console.log('[generic] video started without any click');
-      return;
-    }
+    const timeoutMs = 7000; // total budget ~7s
+    const start = Date.now();
+    let clickedCenter = false;
+    let clickedPlayButton = false;
+    let playClickedAt = 0;
 
-    // 2) First center click
-    await p.mouse.move(centerX, centerY, { steps: 25 });
-    await p.mouse.click(centerX, centerY, { button: 'left' });
-    console.log(
-      `[generic] no playback yet; clicked center at ${centerX},${centerY}`
-    );
+    while (Date.now() - start < timeoutMs) {
+      const now = Date.now();
 
-    const remainingAfterFirst = totalTimeoutMs - initialWaitMs;
-    if (remainingAfterFirst > 0 && (await waitForPlayback(remainingAfterFirst))) {
-      console.log('[generic] video started after first center click');
-      return;
-    }
+      // Look for real <video> elements we can inspect
+      const state = await p.evaluate(() => {
+        const vids = Array.from(document.querySelectorAll('video'));
+        if (!vids.length) {
+          return { videoCount: 0, anyPlaying: false };
+        }
+        const anyPlaying = vids.some(
+          (v) => !v.paused && !v.ended && v.readyState >= 2
+        );
+        return { videoCount: vids.length, anyPlaying };
+      });
 
-    // 3) Extra nudges for stubborn players
-    console.log('[generic] still no playback; trying extra nudges');
-    for (let i = 0; i < 2; i++) {
-      await sleep(3000);
-      await p.mouse.click(centerX, centerY, { button: 'left' });
-      console.log(
-        `[generic] extra click #${i + 1} at center for ${label || '(unknown)'}`
-      );
-      if (await waitForPlayback(7000)) {
+      // If we can see a <video> and it’s playing, we’re done.
+      if (state.videoCount > 0 && state.anyPlaying) {
         console.log(
-          `[generic] video started after extra click #${i + 1} for ${label ||
-            '(unknown)'}`
+          '[generic] video appears to be playing; videoCount=',
+          state.videoCount
         );
         return;
       }
+
+      // If we clicked a play button but still don't see any <video>,
+      // that's a strong hint the real player is inside an iframe.
+      // After ~2s, assume it's doing its thing and bail out quietly.
+      if (
+        clickedPlayButton &&
+        state.videoCount === 0 &&
+        now - playClickedAt > 2000
+      ) {
+        console.log(
+          '[generic] clicked play but no <video> in top document; assuming iframe player is running'
+        );
+        return;
+      }
+
+      // Try clicking a "Play" button once (Video.js / generic)
+      if (!clickedPlayButton) {
+        const playSel = await p.evaluate(() => {
+          const selectors = [
+            '.vjs-play-control.vjs-paused',
+            '.vjs-big-play-button',
+            'button[aria-label*="Play" i]',
+            'button[title*="Play" i]',
+          ];
+          for (const sel of selectors) {
+            const el = document.querySelector(sel);
+            if (el && el instanceof HTMLElement) {
+              el.click();
+              return sel;
+            }
+          }
+          return '';
+        });
+
+        if (playSel) {
+          console.log(
+            `[generic] clicked play button using selector "${playSel}"`
+          );
+          clickedPlayButton = true;
+          playClickedAt = now;
+          await sleep(500); // give it half a second to react
+        }
+      }
+
+      // Fallback: one center click if we *do* see <video> but nothing is moving yet
+      if (state.videoCount > 0 && !clickedCenter) {
+        const centerX = VIDEO_WIDTH / 2;
+        const centerY = VIDEO_HEIGHT / 2;
+        await p.mouse.move(centerX, centerY, { steps: 18 });
+        await p.mouse.click(centerX, centerY, { button: 'left' });
+        console.log(
+          `[generic] no playback yet; clicked center at ${centerX},${centerY}`
+        );
+        clickedCenter = true;
+      }
+
+      await sleep(400);
     }
 
-    // 4) For ms.now, if we still can't *detect* playback, just log and move on
-    let current = '';
-    try {
-      current = (await p.url()) || '';
-    } catch {
-      current = '';
-    }
-    const currentLower = current.toLowerCase();
-
-    if (isMsNow || currentLower.includes('ms.now')) {
-      console.log(
-        '[generic] timeout waiting for video on ms.now, but treating as success after multiple clicks'
-      );
-      return;
-    }
-
-    console.warn('[generic] timeout waiting for video to start playing');
+    console.warn('[generic] (FAST+PLAY) timeout waiting for video to start playing');
   } catch (err) {
-    console.warn('[generic] ensureGenericVideoPlaying error:', err.message);
+    console.warn(
+      '[generic] ensureGenericVideoPlaying (FAST+PLAY) error:',
+      err.message
+    );
   }
 }
 
@@ -673,7 +646,6 @@ async function clickE_EastTile(p) {
         document.querySelectorAll('div.tile-info[aria-label]')
       );
 
-      // Log first few aria-labels for debugging
       console.log(
         '[e] sample aria-labels:',
         tiles.slice(0, 5).map((el) => el.getAttribute('aria-label') || '')
@@ -728,7 +700,6 @@ async function postNavigateForChannel(p, logicalName, url) {
     const host = new URL(url).hostname.toLowerCase();
     const name = canonicalName(logicalName); // "e!" -> "e"
 
-    // USA Network live page with SYFY/E! tiles
     if (host.includes('usanetwork.com')) {
       if (name === 'syfy') {
         console.log('[epg] post-navigate hook for SYFY on usanetwork.com');
@@ -767,7 +738,6 @@ async function tuneTo(url, logicalNameRaw) {
     timeout: 90_000,
   });
 
-  // Site-specific hook (e.g., SYFY / E! tile click on NBCU grid)
   await postNavigateForChannel(p, shortName, url);
 
   if (lowerUrl.includes('philo.com')) {
@@ -778,9 +748,13 @@ async function tuneTo(url, logicalNameRaw) {
   } else {
     await ensureFullScreen(p);
 
-    if (lowerUrl.includes('abc.com') || lowerUrl.includes('abc.go.com')) {
+    if (
+      lowerUrl.includes('abc.com') ||
+      lowerUrl.includes('abc.go.com') ||
+      lowerUrl.includes('abc7ny.com')
+    ) {
       console.log(
-        '[tuneTo] URL looks like ABC (center + F + top-right cursor)'
+        '[tuneTo] URL looks like ABC (center click + m + f)'
       );
       await ensureAbcCenterFullscreenUnmuted(p);
     } else if (
@@ -793,7 +767,6 @@ async function tuneTo(url, logicalNameRaw) {
       );
       await ensureNbcPlayerFullscreenAndHideBar(p);
     } else {
-      // Generic fullscreen logic: try known selectors, then "f", then video.requestFullscreen
       await forceFullscreen(p, shortName || lowerUrl);
     }
 
