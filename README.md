@@ -63,7 +63,7 @@ These get installed via `npm install`.
 
 ```bash
 # Clone this branch
-git clone -b ts-proxy --single-branch https://github.com/ricksauto08/hdmi-encoder-remote.git
+git clone -b main --single-branch https://github.com/ricksauto08/hdmi-encoder-remote.git
 cd hdmi-encoder-remote
 
 # Install Node dependencies
