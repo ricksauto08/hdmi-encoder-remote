@@ -42,40 +42,9 @@ On the HDMI box (Linux):
 
 - **Node.js** (LTS, e.g. 18+)
 - **npm**
-- **Google Chrome** or Chromium
-  - On Debian/Ubuntu, something like:  
-    `sudo apt install google-chrome-stable` *or* `sudo apt install chromium`
-- A **hardware HDMI encoder** that exposes MPEG-TS over HTTP, e.g.:  
-  `http://192.168.0.168/0.ts`
-
-This project uses:
-
-- `puppeteer-core`
-- `express`
-- `morgan`
-- `console-stamp`
-
-These get installed via `npm install`.
-
----
-
-## Installation
-
-```bash
-# Clone this branch
-git clone -b main --single-branch https://github.com/ricksauto08/hdmi-encoder-remote.git
-cd hdmi-encoder-remote
-
-# Install Node dependencies
-npm install
-
-## Helper scripts
-
-This repo includes a few small helper tools that make managing HDMI channels and playlists easier.
-
-All of these are Node scripts. You can run them from the repo root like:
-
-```bash
-node channel-helper-web.js
-node backfill-playlist-from-run.js
-node fix-channel-numbers.js
+- **Google Chrome** or Chromium  
+  On Debian/Ubuntu, something like:
+  ```bash
+  sudo apt install google-chrome-stable
+  # or
+  sudo apt install chromium
